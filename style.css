@@ -10,6 +10,8 @@
   --White: #ffffff;
   --Black: #1d1c1b;
   --NavyBlue: #004e92;
+  --LightBlue: #3498db;
+  --DarkGrey: #555;
 }
 body {
   font-family: var(--Michroma-Font);
@@ -82,7 +84,7 @@ body {
 }
 
 #sidebar a:hover {
-  background-color: #555;
+  background-color: var(--DarkGrey);
 }
 
 #title {
@@ -91,4 +93,29 @@ body {
 .box {
   background: var(--White);
   height: 500px;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+}
+/* add button */
+.add-candidate-button {
+  font-size: 1rem;
+  padding: 10px 20px;
+  background-color: var(--NavyBlue);
+  color: var(--White);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  text-align: end;
+  margin: 20px 20px;
+}
+.add-candidate-button i {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
 }
