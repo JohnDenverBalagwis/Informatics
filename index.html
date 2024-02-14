@@ -50,12 +50,49 @@
         <div id="title">list of candidates</div>
 
         <div class="box">
-            <button class="add-candidate-button">
+            <button id="myBtn" class="add-candidate-button">
                 <i class="fas fa-user-plus"></i> Add
             </button>
         </div>
 
     </div>
+
+
+    <div id="myModal" class="modal">
+        <div class="modal-body">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h4>Registration</h4>
+            </div>
+            <form method="post" class="modal-main-content">
+                <div class="candidate-number">
+                    <h5>Candidate #1</h5>
+                </div>
+                <div class="modal-inputs">
+                    <label for="">Name:</label>
+                    <input type="text">
+                </div>
+                <div class="modal-inputs">
+                    <label for="">Age:</label>
+                    <input type="text">
+                </div>
+                <div class="modal-inputs">
+                    <label for="">Course:</label>
+                    <input type="text">
+                </div>
+                <div class="modal-inputs">
+                    <label >Upload Photo</label>
+                    <input type="file">
+                </div>
+    
+                <div class="modal-buttons">
+                    <span id="cancel">Cancel</span>
+                    <a href="">Submit</a>
+                </div>
+            </form >
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 

@@ -184,3 +184,94 @@ body {
   font-size: 1.5rem;
   margin-bottom: 10px;
 }
+
+
+/* The Modal (background) */
+.modal {
+  display: flex; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  background-color: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-body {
+  background-color: white;
+  max-width: 50%;
+  margin: 8vh auto 0;
+  padding: 0 10px 10px;
+  border-radius: 8px;
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  padding: 10px;
+  border-bottom: 1px solid #888;
+  width: 100%; /* Could be more or less, depending on screen size */
+}
+
+.modal-content h4 {
+  text-align: center;
+  font-weight: bold;
+}
+
+/* The Close Button */
+.close {
+  line-height: 20px;
+  float: right;
+  color: #aaa;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-main-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+}
+
+.candidate-number {
+  border: 1px solid black;
+  border-radius: 3px;
+  padding: 3px 8px;
+  margin: 8px auto;
+}
+
+.modal-inputs {
+  display: flex;
+  width: 23rem;
+  justify-content: space-between;
+  padding: 4px 0;
+}
+
+.modal-buttons span {
+  background-color:  #BB3212;
+  padding: 1px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: white;
+}
+
+.modal-buttons a {
+  text-decoration: none;
+  background-color:  #3D5A80;
+  padding: 1px 5px;
+  border-radius: 4px;
+  color: white;
+}
