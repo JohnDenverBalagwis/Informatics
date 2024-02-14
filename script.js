@@ -18,7 +18,6 @@ function myFunction() {
     }
   }
 
-
   function myFunction2() {
     document.getElementById("myDropdown2").classList.toggle("show");
   }
@@ -68,4 +67,18 @@ window.onclick = function(event) {
   if (event.target == modal) {
     modal.style.display = "none";
   }
+}
+
+function disableSubmit(event) {
+  // Prevent the default form submission behavior
+  event.preventDefault();
+}
+
+
+function showError(message) {
+  document.getElementById(message).style.display = 'block';
+}
+
+function hideError() {
+  document.getElementById('errorPopup').style.display = 'none';
 }

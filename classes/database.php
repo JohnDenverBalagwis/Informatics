@@ -268,9 +268,8 @@ class database
 
   public function delete($table, $id)
   {
-
     $sql = "DELETE FROM $table";
-    $sql .= " WHERE $id ";
+    $sql .= " WHERE id = $id ";
     return $this->mysqli->query($sql);
   }
 

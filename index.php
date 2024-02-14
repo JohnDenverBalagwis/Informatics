@@ -1,19 +1,27 @@
 <?php 
 include "classes/database.php";
 
-$judges = new database();
+$admin = new database();
 
 if (isset($_POST['submit'])) {
-  $name = mysqli_escape_string($judges->mysqli, $_POST['name']);
-  $age = mysqli_escape_string($judges->mysqli, $_POST['age']);
-  $course = mysqli_escape_string($judges->mysqli, $_POST['course']);
+  $name = mysqli_escape_string($admin->mysqli, $_POST['name']);
+  $age = mysqli_escape_string($admin->mysqli, $_POST['age']);
+  $course = mysqli_escape_string($admin->mysqli, $_POST['course']);
 
-  if ($judges->isExisted('candidates', ['name'=>$name])) {
-    $candidateExist = "Candidate Already Exist";
+  if ($admin->isExisted('candidates', ['name'=>$name])) {
+    $candidateDoesntExist = true;
   } else {
-    $judges->insertData('candidates', ['name'=>$name, 'age'=>$age, 'course'=>$course]);
+    $admin->insertData('candidates', ['name'=>$name, 'age'=>$age, 'course'=>$course]);
+
+    if ($admin->insertImage('candidate-image', 'candidates', 'image', 'uploads/')) {
+
+    } else {
+      $wrong_file = true;
+    }
   }
 }
+
+
 
 
 ?>
@@ -27,6 +35,8 @@ if (isset($_POST['submit'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://kit.fontawesome.com/5ad1518180.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style.css?<?php echo time(); ?>">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <title>List of Candidates</title>
 
 </head>
@@ -68,30 +78,72 @@ if (isset($_POST['submit'])) {
     <div id="main">
         <div id="title">list of candidates</div>
 
+
+
         <div class="box">
-            <button id="myBtn" class="add-candidate-button">
-                <i class="fas fa-user-plus"></i> Add
-            </button>
+          <button id="myBtn" class="add-candidate-button">
+            Add
+          </button>
+
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Course</th>
+                <th>Image</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+            <?php
+                $candidates = $admin->select('candidates', '*');
+                  while ($row = mysqli_fetch_assoc($candidates)) {
+                ?>
+                <tr>
+                  <td><?php echo $row["name"]; ?></td>
+                  <td><?php echo $row["age"]; ?></td>
+                  <td><?php echo $row["course"]; ?></td>
+                  <td><img src="uploads/<?php echo $row['image']; ?>" style="width: 5rem; cursor: pointer;" alt="candidate"></td>
+                  <td>
+                    <a class="btn btn-secondary" style="font-size: .7rem; padding: 2px 5px" href="edit-candidate.php?id=<?php echo $row['id']; ?>">Edit</a>
+                    
+                      <!-- Button trigger modal -->
+                      <button type="button" class="btn btn-danger" style="font-size: .7rem; padding: 2px 5px" data-bs-toggle="modal" data-bs-target="#exampleModal<?php echo $row['id']; ?>">
+                        Delete
+                      </button>
+
+                      <!-- Modal -->
+
+                      <div class="modal fade" id="exampleModal<?php echo $row['id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h1 class="modal-title fs-5" id="exampleModalLabel">Warning!</h1>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body" style="margin:0; text-align: center;">
+                              Are you Sure You want to Delete?
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary"  style="font-size: .7rem; padding: 2px 5px" data-bs-dismiss="modal">Cancel</button>
+                              <a class="btn btn-danger" style="font-size: .7rem; padding: 2px 5px" href="delete-candidate.php?id=<?php echo $row['id']; ?>">Delete</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
 
 
-        <?php
-          $candidates = $judges->select('candidates', '*');
-
-          while ($row = mysqli_fetch_assoc($candidates)) {
-
-        ?>
-        <button id="myBtn" class="add-candidate-button">
-            <?php echo $row['name'] . " - " . $row['age'] . " - " . $row['course']; ?>
-        </button>
-        
-        <?php
-          }
-        ?>
-        
-      </div>
+                  </td>
+                </tr>
+                <?php
+                  }
+                ?>
+            </tbody>
+          </table>
+        </div>
 
     </div>
-
 
     <div id="myModal" class="modal">
         <div class="modal-body">
@@ -99,25 +151,26 @@ if (isset($_POST['submit'])) {
                 <span class="close">&times;</span>
                 <h4>Registration</h4>
             </div>
-            <form method="post" class="modal-main-content">
+
+            <form method="post" class="modal-main-content" enctype="multipart/form-data">
                 <div class="candidate-number">
                     <h5>Candidate #1</h5>
                 </div>
                 <div class="modal-inputs">
                     <label for="">Name:</label>
-                    <input type="text" name="name" required>
+                    <input class="form-control" type="text" name="name" required>
                 </div>
                 <div class="modal-inputs">
                     <label for="">Age:</label>
-                    <input type="number" name="age" required>
+                    <input class="form-control" type="number" name="age" required>
                 </div>
                 <div class="modal-inputs">
                     <label for="">Course:</label>
-                    <input type="text" name="course" required>
+                    <input class="form-control" type="text" name="course" required>
                 </div>
-                <div class="modal-inputs">
-                    <label >Upload Photo</label>
-                    <input type="file">
+                <div class="modal-inputs" class="input-group mb-3">
+                    <label class="form-label">Image</label>
+                    <input type="file" class="form-control" name="candidate-image" id="inputGroupFile01" required>
                 </div>
     
                 <div class="modal-buttons">
@@ -128,7 +181,23 @@ if (isset($_POST['submit'])) {
         </div>
     </div>
 
+
+    <div id="errorPopup" class="popup">
+      <div class="popup-content">
+        <span class="close" onclick="hideError()">&times;</span>
+        <p>Error Message Here</p>
+      </div>
+    </div>
+
+
+
     <script src="script.js"></script>
+
+    <?php
+    if (isset($candidateDoesntExist)) {
+      echo "<script>showError('Candidate Already Exist');</script>";
+    }
+    ?>
 </body>
 
 </html>

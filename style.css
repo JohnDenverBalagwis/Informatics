@@ -96,10 +96,9 @@ body {
 .box {
   background: var(--White);
   height: 500px;
-  position: relative;
   display: flex;
-  flex-direction: row;
   border-radius: 10px;
+  flex-direction: column;
 }
 
 /* Dropdown Button */
@@ -160,20 +159,16 @@ body {
 /* add button */
 .add-candidate-button {
   font-size: 1rem;
-  padding: 10px 20px;
+  padding: 2px 4px;
   background-color: var(--NavyBlue);
   color: var(--White);
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: center;
-  width: 100px;
-  height: 100px;
-  text-align: end;
-  margin: 20px 20px;
+  margin: 20px;
+  width: 7rem;
+  box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.4);
+
 }
 
 .add-candidate-button:hover {
@@ -260,12 +255,21 @@ body {
   padding: 4px 0;
 }
 
+.modal-inputs input {
+  max-width: 17rem;
+}
+
+
 .modal-buttons span {
   background-color:  #BB3212;
-  padding: 1px 5px;
+  padding: 4px 7px;
   border-radius: 4px;
   cursor: pointer;
   color: white;
+  margin-right: 1rem;
+  box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.4);
+
+  
 }
 
 .modal-buttons input {
@@ -274,4 +278,40 @@ body {
   padding: 1px 5px;
   border-radius: 4px;
   color: white;
+  box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.4);
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield; /* Firefox */
+}
+
+input[type="file" ] {
+  cursor: pointer;
+}
+
+a {
+  user-select: none;
+}
+
+
+.popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.popup-content {
+  text-align: center;
 }
