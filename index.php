@@ -10,15 +10,16 @@ if (isset($_POST['submit'])) {
 
   if ($admin->isExisted('candidates', ['name'=>$name])) {
     $candidateDoesntExist = true;
-  } else {
-    $admin->insertData('candidates', ['name'=>$name, 'age'=>$age, 'course'=>$course]);
+  } else if ($admin->checkIfImage('candidate-image')) {
+    
+      $admin->insertData('candidates', ['name'=>$name, 'age'=>$age, 'course'=>$course]);
+      $admin->insertImage('candidate-image', 'candidates', 'image', 'uploads/');
 
-    if ($admin->insertImage('candidate-image', 'candidates', 'image', 'uploads/')) {
 
+      $candidateAdded = true;
     } else {
       $wrong_file = true;
     }
-  }
 }
 
 
@@ -88,6 +89,7 @@ if (isset($_POST['submit'])) {
           <table class="table table-striped">
             <thead>
               <tr>
+                <th>Number</th>
                 <th>Name</th>
                 <th>Age</th>
                 <th>Course</th>
@@ -101,6 +103,7 @@ if (isset($_POST['submit'])) {
                   while ($row = mysqli_fetch_assoc($candidates)) {
                 ?>
                 <tr>
+                  <td><?php echo $row['candidate_number']; ?></td>
                   <td><?php echo $row["name"]; ?></td>
                   <td><?php echo $row["age"]; ?></td>
                   <td><?php echo $row["course"]; ?></td>
@@ -185,7 +188,7 @@ if (isset($_POST['submit'])) {
     <div id="errorPopup" class="popup">
       <div class="popup-content">
         <span class="close" onclick="hideError()">&times;</span>
-        <p>Error Message Here</p>
+        <p id="errorMessage">Error Message Here</p>
       </div>
     </div>
 
@@ -195,8 +198,14 @@ if (isset($_POST['submit'])) {
 
     <?php
     if (isset($candidateDoesntExist)) {
-      echo "<script>showError('Candidate Already Exist');</script>";
+      echo "<script>showError('candidate already exist');</script>";
+    } else if (isset($candidateAdded)) {
+      echo "<script>showError('candidate added');</script>";
+    } else if (isset($wrong_file)) {
+      echo "<script>showError('Upload jpg, jpeg and png only');</script>";
     }
+
+
     ?>
 </body>
 

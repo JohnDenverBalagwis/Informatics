@@ -18,6 +18,7 @@ function myFunction() {
     }
   }
 
+
   function myFunction2() {
     document.getElementById("myDropdown2").classList.toggle("show");
   }
@@ -76,7 +77,9 @@ function disableSubmit(event) {
 
 
 function showError(message) {
-  document.getElementById(message).style.display = 'block';
+  document.getElementById('errorMessage').innerHTML = message;
+
+  document.getElementById('errorPopup').style.display = 'block';
 }
 
 function hideError() {
