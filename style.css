@@ -188,7 +188,7 @@ body {
 
 /* The Modal (background) */
 .modal {
-  display: flex; /* Hidden by default */
+  display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
   width: 100%; /* Full width */
@@ -268,7 +268,7 @@ body {
   color: white;
 }
 
-.modal-buttons a {
+.modal-buttons input {
   text-decoration: none;
   background-color:  #3D5A80;
   padding: 1px 5px;
