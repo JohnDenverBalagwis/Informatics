@@ -1,7 +1,7 @@
 <?php
-    include "classes/database.php";
+include "classes/database.php";
 
-    $judges = new database();
+$judges = new database();
 ?>
 
 
@@ -29,47 +29,47 @@
         <a class="vote-btn" href="image-slider.php">Vote Now.</a>
         <div class="candidate-list">
 
-        <div class="container">
-        <?php
-            $male_candidates = $judges->mysqli->query("select * from male_candidates ORDER BY candidate_number ASC");
+            <div class="container">
+                <?php
+                $male_candidates = $judges->mysqli->query("select * from male_candidates ORDER BY candidate_number ASC");
 
 
-            while ($row = mysqli_fetch_assoc($male_candidates)) {
-        ?>
-            <div class="candidate">
-                <div class="candidate-image">
-                    <img src="uploads/<?php echo $row['image']; ?>" alt="candidate">
-                </div>
-                <div class="candidate-details">
-                    <div class="candidate-name"><?php echo $row['name']; ?></div>
-                    <div class="candidate-position"><?php echo $row['candidate_number']; ?></div>
-                </div>
-            </div>
-        <?php } ?>
-        </div>
-
-
-        <div class="container">
-        <?php
-        
-            $female_candidates = $judges->mysqli->query("select * from female_candidates ORDER BY candidate_number ASC");
-
-            while ($row = mysqli_fetch_assoc($female_candidates)) {
-        ?>
-            <div class="candidate female-candidate">
-                <div class="candidate-image">
-                    <img src="uploads/<?php echo $row['image']; ?>" alt="candidate">
-                </div>
-                <div class="candidate-details">
-                    <div class="candidate-name"><?php echo $row['name']; ?></div>
-                    <div class="candidate-position"><?php echo $row['candidate_number']; ?></div>
-                </div>
+                while ($row = mysqli_fetch_assoc($male_candidates)) {
+                ?>
+                    <div class="candidate">
+                        <div class="candidate-image">
+                            <img src="uploads/<?php echo $row['image']; ?>" alt="candidate">
+                        </div>
+                        <div class="candidate-details">
+                            <div class="candidate-name"><?php echo $row['name']; ?></div>
+                            <div class="candidate-position"><?php echo $row['candidate_number']; ?></div>
+                        </div>
+                    </div>
+                <?php } ?>
             </div>
 
-        <?php } ?>
-        </div>
 
-    </div>
+            <div class="container">
+                <?php
+
+                $female_candidates = $judges->mysqli->query("select * from female_candidates ORDER BY candidate_number ASC");
+
+                while ($row = mysqli_fetch_assoc($female_candidates)) {
+                ?>
+                    <div class="candidate female-candidate">
+                        <div class="candidate-image">
+                            <img src="uploads/<?php echo $row['image']; ?>" alt="candidate">
+                        </div>
+                        <div class="candidate-details">
+                            <div class="candidate-name"><?php echo $row['name']; ?></div>
+                            <div class="candidate-position"><?php echo $row['candidate_number']; ?></div>
+                        </div>
+                    </div>
+
+                <?php } ?>
+            </div>
+
+        </div>
 </body>
 
 </html>

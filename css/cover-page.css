@@ -170,12 +170,3 @@ body::after {
   background-color: var(--NavyBlue);
   color: var(--White);
 }
-/* #spotlight {
-  position: fixed;
-  opacity: 1;
-  width: 100vw;
-  height: 100vh;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-} */
