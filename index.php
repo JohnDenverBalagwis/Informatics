@@ -4,16 +4,17 @@ include "classes/database.php";
 $admin = new database();
 
 if (isset($_POST['submit'])) {
+  $candidate_number = $_POST['candidate-number'];
   $name = mysqli_escape_string($admin->mysqli, $_POST['name']);
   $age = mysqli_escape_string($admin->mysqli, $_POST['age']);
   $course = mysqli_escape_string($admin->mysqli, $_POST['course']);
 
-  if ($admin->isExisted('candidates', ['name'=>$name])) {
+  if ($admin->isExisted('male_candidates', ['name'=>$name])) {
     $candidateDoesntExist = true;
   } else if ($admin->checkIfImage('candidate-image')) {
     
-      $admin->insertData('candidates', ['name'=>$name, 'age'=>$age, 'course'=>$course]);
-      $admin->insertImage('candidate-image', 'candidates', 'image', 'uploads/');
+      $admin->insertData('male_candidates', ['name'=>$name, 'age'=>$age, 'course'=>$course, 'candidate_number'=>$candidate_number]);
+      $admin->insertImage('candidate-image', 'male_candidates', 'image', 'uploads/');
 
 
       $candidateAdded = true;
@@ -22,6 +23,7 @@ if (isset($_POST['submit'])) {
     }
 }
 
+$candidateNumber = $admin->select('male_candidates', '*')->num_rows + 1;
 
 
 
@@ -77,7 +79,7 @@ if (isset($_POST['submit'])) {
     </div>
 
     <div id="main">
-        <div id="title">list of candidates</div>
+        <div id="title">list of male candidates</div>
 
 
 
@@ -99,7 +101,7 @@ if (isset($_POST['submit'])) {
             </thead>
             <tbody>
             <?php
-                $candidates = $admin->select('candidates', '*');
+                $candidates = $admin->select('male_candidates', '*');
                   while ($row = mysqli_fetch_assoc($candidates)) {
                 ?>
                 <tr>
@@ -130,7 +132,7 @@ if (isset($_POST['submit'])) {
                             </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-secondary"  style="font-size: .7rem; padding: 2px 5px" data-bs-dismiss="modal">Cancel</button>
-                              <a class="btn btn-danger" style="font-size: .7rem; padding: 2px 5px" href="delete-candidate.php?id=<?php echo $row['id']; ?>">Delete</a>
+                              <a class="btn btn-danger" style="font-size: .7rem; padding: 2px 5px" href="delete-candidate.php?id=<?php echo $row['id']; ?>&url=<?php echo $row['image']; ?>">Delete</a>
                             </div>
                           </div>
                         </div>
@@ -156,8 +158,9 @@ if (isset($_POST['submit'])) {
             </div>
 
             <form method="post" class="modal-main-content" enctype="multipart/form-data">
-                <div class="candidate-number">
-                    <h5>Candidate #1</h5>
+                <div class="modal-inputs">
+                    <label for="">Number:</label>
+                    <input class="form-control" type="text" name="candidate-number" value="<?php echo $candidateNumber; ?>" required>
                 </div>
                 <div class="modal-inputs">
                     <label for="">Name:</label>
