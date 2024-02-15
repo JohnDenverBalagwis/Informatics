@@ -1,0 +1,72 @@
+@import url("https://fonts.googleapis.com/css2?family=Michroma&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Beau+Rivage&display=swap");
+:root {
+  --Michroma-Font: "Michroma", sans-serif;
+  --BeauRivage-Font: "Beau Rivage", cursive;
+  --White: #ffffff;
+  --Black: #1d1c1b;
+  --NavyBlue: #004e92;
+  --LightBlue: #3498db;
+  --DarkGrey: #555;
+  --DarkBlue: #000428;
+  --SuperDarkBlue: #04144a;
+}
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: var(--Michroma-Font);
+}
+body {
+  min-height: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: rgb(4, 20, 74);
+  background: linear-gradient(
+    90deg,
+    rgba(4, 20, 74, 1) 32%,
+    rgba(0, 78, 146, 1) 61%,
+    rgba(0, 78, 146, 1) 83%
+  );
+}
+.container {
+  height: 100vh;
+  border: 1px solid var(--White);
+}
+
+.upper-logo {
+  display: flex;
+  justify-content: flex-start;
+  cursor: pointer;
+}
+.college {
+  font-size: 0.5rem;
+  text-align: end;
+}
+.name {
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  flex-direction: column;
+}
+.informatics,
+.college {
+  color: var(--White);
+}
+.upper-logo img {
+  width: 50px;
+}
+
+/*end of the logo*/
+.box {
+  height: 100%;
+  border: 1px solid var(--White);
+}
+.box h4 {
+  display: inline-block;
+  margin-top: 2rem;
+  margin-left: 2rem;
+  color: var(--White);
+  text-align: left;
+}

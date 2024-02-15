@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", function() {
   // Automatically close the popup after 3 seconds (adjust as needed)
   popupTimeout = setTimeout(function() {
     popup.style.display = 'none';
-  }, 1000);
+  }, 1500);
 });
 
 function hideError() {

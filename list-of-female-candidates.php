@@ -101,7 +101,11 @@ $candidateNumber = $admin->select('female_candidates', '*')->num_rows + 1;
             </thead>
             <tbody>
             <?php
-                $candidates = $admin->select('female_candidates', '*');
+
+                 $candidates = $admin->mysqli->query("select * from female_candidates ORDER BY candidate_number ASC");
+
+
+
                   while ($row = mysqli_fetch_assoc($candidates)) {
                 ?>
                 <tr>

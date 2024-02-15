@@ -1,0 +1,123 @@
+@import url("https://fonts.googleapis.com/css2?family=Michroma&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Beau+Rivage&display=swap");
+:root {
+  --Michroma-Font: "Michroma", sans-serif;
+  --BeauRivage-Font: "Beau Rivage", cursive;
+  --White: #ffffff;
+  --Black: #1d1c1b;
+  --NavyBlue: #004e92;
+  --LightBlue: #3498db;
+  --DarkGrey: #555;
+  --DarkBlue: #000428;
+  --SuperDarkBlue: #04144a;
+}
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: var(--Michroma-Font);
+}
+body {
+  min-height: 100%;
+  height: 100vh;
+  overflow-y: auto;
+  background: rgb(4, 20, 74);
+  background: linear-gradient(
+    90deg,
+    rgba(4, 20, 74, 1) 32%,
+    rgba(0, 78, 146, 1) 61%,
+    rgba(0, 78, 146, 1) 83%
+  );
+}
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 80vw;
+}
+
+.upper-logo {
+  display: flex;
+  justify-content: flex-start;
+  cursor: pointer;
+}
+.college {
+  font-size: 0.5rem;
+  text-align: end;
+}
+.name {
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  flex-direction: column;
+}
+.informatics,
+.college {
+  color: var(--White);
+}
+.upper-logo img {
+  width: 50px;
+}
+.vote-btn {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  background-color: var(--DarkBlue);
+  outline: 2px solid var(--White);
+  color: var(--White);
+  font-size: 1rem;
+  text-decoration: none;
+  cursor: pointer;
+  position: absolute;
+  top: 1px;
+  right: 20px;
+}
+.vote-btn:hover {
+  background-color: var(--NavyBlue);
+  color: var(--White);
+}
+/*end of the logo*/
+/*start of candidate List*/
+.candidate-list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  /* border: 1px solid var(--White); */
+}
+.candidate {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 1rem;
+  box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
+  background-color: #2d5c92;
+  border-radius: 10px;
+  padding: 0.5rem 0rem 0.5rem 0rem;
+}
+.candidate-image {
+  border-radius: 5px;
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+}
+.candidate-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.candidate-details {
+  margin-top: 0.5rem;
+  font-size: 0.7rem;
+  text-align: center;
+}
+.candidate-name,
+.candidate-position {
+  color: var(--White);
+}
+.female-candidate {
+  background-color: #a55e7c;
+}
