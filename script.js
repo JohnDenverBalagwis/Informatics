@@ -76,12 +76,41 @@ function disableSubmit(event) {
 }
 
 
-function showError(message) {
-  document.getElementById('errorMessage').innerHTML = message;
+// function showError(message) {
+//   document.getElementById('errorMessage').innerHTML = message;
 
-  document.getElementById('errorPopup').style.display = 'block';
-}
+//   var popup = document.getElementById('errorPopup');
+
+//   popup.style.display = 'block';
+
+//   popupTimeout = setTimeout(function() {
+//     popup.style.display = 'none';
+//   }, 3000);
+// }
+
+// function hideError() {
+//   document.getElementById('errorPopup').style.display = 'none';
+
+//   clearTimeout(popupTimeout);
+// }
+
+
+
+
+var popupTimeout; // Variable to store the timeout ID
+
+document.addEventListener("DOMContentLoaded", function() {
+  var popup = document.getElementById('errorPopup');
+  popup.style.display = 'block';
+
+  // Automatically close the popup after 3 seconds (adjust as needed)
+  popupTimeout = setTimeout(function() {
+    popup.style.display = 'none';
+  }, 1000);
+});
 
 function hideError() {
-  document.getElementById('errorPopup').style.display = 'none';
+  var popup = document.getElementById('popup');
+  popup.style.display = 'none';
+  clearTimeout(popupTimeout); // Clear the timeout when the popup is closed manually
 }

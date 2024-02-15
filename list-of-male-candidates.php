@@ -60,8 +60,8 @@ $candidateNumber = $admin->select('male_candidates', '*')->num_rows + 1;
             <div class="dropdown">
                 <a onclick="myFunction()" class="dropbtn"><i class="fa-regular fa-user"></i>Candidates <i class="fa-solid fa-angle-down"></i></a></a>
                 <div id="myDropdown" class="dropdown-content">
-                    <a href="#">Mr.</a>
-                    <a href="#">Ms.</a>
+                    <a href="list-of-male-candidates.php">Mr.</a>
+                    <a href="list-of-female-candidates.php">Ms.</a>
                 </div>
             </div>
 
@@ -111,7 +111,7 @@ $candidateNumber = $admin->select('male_candidates', '*')->num_rows + 1;
                   <td><?php echo $row["course"]; ?></td>
                   <td><img src="uploads/<?php echo $row['image']; ?>" style="width: 5rem; cursor: pointer;" alt="candidate"></td>
                   <td>
-                    <a class="btn btn-secondary" style="font-size: .7rem; padding: 2px 5px" href="edit-candidate.php?id=<?php echo $row['id']; ?>">Edit</a>
+                    <a class="btn btn-secondary" style="font-size: .7rem; padding: 2px 5px" href="edit-candidate.php?id=<?php echo $row['id']; ?>&sex=male">Edit</a>
                     
                       <!-- Button trigger modal -->
                       <button type="button" class="btn btn-danger" style="font-size: .7rem; padding: 2px 5px" data-bs-toggle="modal" data-bs-target="#exampleModal<?php echo $row['id']; ?>">
@@ -132,7 +132,7 @@ $candidateNumber = $admin->select('male_candidates', '*')->num_rows + 1;
                             </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-secondary"  style="font-size: .7rem; padding: 2px 5px" data-bs-dismiss="modal">Cancel</button>
-                              <a class="btn btn-danger" style="font-size: .7rem; padding: 2px 5px" href="delete-candidate.php?id=<?php echo $row['id']; ?>&url=<?php echo $row['image']; ?>">Delete</a>
+                              <a class="btn btn-danger" style="font-size: .7rem; padding: 2px 5px" href="delete-candidate.php?id=<?php echo $row['id']; ?>&url=<?php echo $row['image']; ?>&sex=male">Delete</a>
                             </div>
                           </div>
                         </div>
@@ -202,10 +202,16 @@ $candidateNumber = $admin->select('male_candidates', '*')->num_rows + 1;
     <?php
     if (isset($candidateDoesntExist)) {
       echo "<script>showError('candidate already exist');</script>";
+      sleep(1000);
+      echo "<script>hideError();</script>";
     } else if (isset($candidateAdded)) {
       echo "<script>showError('candidate added');</script>";
+      sleep(1000);
+      echo "<script>hideError();</script>";
     } else if (isset($wrong_file)) {
       echo "<script>showError('Upload jpg, jpeg and png only');</script>";
+      sleep(1000);
+      echo "<script>hideError();</script>";
     }
 
 
