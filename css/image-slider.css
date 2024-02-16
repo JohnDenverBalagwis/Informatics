@@ -11,6 +11,7 @@
   --DarkBlue: #000428;
   --SuperDarkBlue: #04144a;
 }
+
 * {
   padding: 0;
   margin: 0;
@@ -20,9 +21,9 @@
 
 body {
   background-image: linear-gradient(90deg, #000428, #004E92);
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-
 }
 
 .top-nav {
@@ -55,9 +56,145 @@ body {
   width: 70px;
 }
 
-
 .main-container {
-  position: relative;
-  top: 100px;
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+  align-items: center;
+  gap: 10rem;
 }
 
+.main-content {
+  background-color: none;
+}
+
+/* slider  */
+
+.slider-container {
+  position: relative;
+  width: 350px;
+  /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); */
+
+}
+
+.candidate-number {
+  color: white;
+  text-align: center;
+}
+
+.candidate-name {
+  color: white;
+  text-align: center;
+}
+
+.slider {
+  display: flex;
+  overflow: hidden;
+  
+}
+
+.slider div {
+  width: 350px;
+  border-radius: 12px;
+  transition: transform 0.5s ease;
+}
+
+img {
+  width: 350px;
+}
+
+.prev, .next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.prev {
+  left: 10px;
+  border-radius: 9px;
+  background-color: rgba(255, 255, 255, 0.131);
+  color: black;
+  border: 1px solid rgba(255, 255, 255, 0.159);
+}
+
+.next {
+  right: 10px;
+  border-radius: 9px;
+  background-color: rgba(255, 255, 255, 0.156);
+  color: black;
+  border: 1px solid rgba(255, 255, 255, 0.197);
+}
+
+
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type=number] {
+    -moz-appearance: textfield; /* Firefox */
+}
+
+
+.criteria-container {
+  border: 1px solid white;
+  background-color: rgb(155, 155, 155);
+  border-radius: 9px;
+  color: rgb(0, 0, 0);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  height: fit-content;
+  padding: 10px 60px;
+}
+
+.criteria-container h5 {
+  text-align: center;
+}
+
+.criteria-inputs {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.criteria-inputs input {
+  width: 4rem;
+  margin-left: 20px;
+}
+
+input[type="number"] {
+  padding: 0 10px;
+}
+
+.total-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.total-wrapper label {
+  font-size: 1.3rem;
+}
+
+.total-inputs {
+  display: flex;
+  align-items: center;
+}
+
+.total-inputs input[type="number"] {
+  width: 4rem;
+}
+
+.total-inputs input[type="submit"] {
+  font-size: .7rem;
+  padding: 4px 8px;
+  height: fit-content;
+  margin-left: 5px;
+}

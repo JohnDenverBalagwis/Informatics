@@ -179,7 +179,7 @@ if (isset($_POST['submit'])) {
                 </div>
                 <div class="modal-inputs">
                     <label for="">Age:</label>
-                    <input class="form-control" type="number" name="age" required>
+                    <input class="form-control" type="number" name="age" min="0" max="50" required>
                 </div>
                 <div class="modal-inputs">
                     <label for="">Course:</label>
