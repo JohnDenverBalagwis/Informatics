@@ -3,6 +3,10 @@ include "classes/database.php";
 
 $admin = new database();
 
+$candidateExist = false;
+$candidateAdded = false;
+$wrong_file = false;
+
 if (isset($_POST['submit'])) {
   $candidate_number = $_POST['candidate-number'];
   $name = mysqli_escape_string($admin->mysqli, $_POST['name']);
@@ -10,7 +14,7 @@ if (isset($_POST['submit'])) {
   $course = mysqli_escape_string($admin->mysqli, $_POST['course']);
 
   if ($admin->isExisted('female_candidates', ['name'=>$name])) {
-    $candidateDoesntExist = true;
+    $candidateExist = true;
   } else if ($admin->checkIfImage('candidate-image')) {
     
       $admin->insertData('female_candidates', ['name'=>$name, 'age'=>$age, 'course'=>$course, 'candidate_number'=>$candidate_number]);
@@ -40,6 +44,7 @@ $candidateNumber = $admin->select('female_candidates', '*')->num_rows + 1;
     <link rel="stylesheet" href="style.css?<?php echo time(); ?>">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="script.js" defer></script>
     <title>List of Candidates</title>
 
 </head>
@@ -192,28 +197,42 @@ $candidateNumber = $admin->select('female_candidates', '*')->num_rows + 1;
     </div>
 
 
-    <div id="errorPopup" class="popup">
-      <div class="popup-content">
-        <span class="close" onclick="hideError()">&times;</span>
-        <p id="errorMessage">Error Message Here</p>
-      </div>
+    <div id="popup">
+      <p id="popupMessage"></p>
     </div>
 
+    <script>
+      function showPopup(message) {
+      var popup = document.getElementById("popup");
+      document.getElementById('popupMessage').innerHTML = message;
+      popup.style.display = "block"; // Show the popup
 
-
-    <script src="script.js"></script>
-
-    <?php
-    if (isset($candidateDoesntExist)) {
-      echo "<script>showError('candidate already exist');</script>";
-    } else if (isset($candidateAdded)) {
-      echo "<script>showError('candidate added');</script>";
-    } else if (isset($wrong_file)) {
-      echo "<script>showError('Upload jpg, jpeg and png only');</script>";
+      // Automatically close the popup after 2 seconds
+      setTimeout(function() {
+          popup.style.display = "none"; // Hide the popup
+      }, 1500);
     }
 
+    </script>
+    
 
+
+
+
+    <?php
+      if ($candidateExist) {
+        echo "<script>showPopup('candidate already exist');</script>";
+      } else if ($candidateAdded) {
+        echo "<script>showPopup('candidate added successfully');</script>"; 
+      } else if ($wrong_file) {
+        echo "<script>showPopup('upload only jpg, jpeg and png files');</script>";
+      } else if (isset($_GET['deleted'])) {
+        echo "<script>showPopup('candidate deleted successfully');</script>";
+      }
     ?>
+
+
+
 </body>
 
 </html>
