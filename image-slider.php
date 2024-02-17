@@ -1,4 +1,9 @@
-<?php ?>
+<?php
+include "classes/database.php";
+
+$judges = new database();
+
+?>
 
 
 <!DOCTYPE html>
@@ -30,110 +35,84 @@
         <div class="main-content">
             <div class="slider-container">
                 <div class="slider">
+                    <?php
+                        $candidates = $judges->mysqli->query("SELECT * FROM male_candidates ORDER BY candidate_number ASC");
+
+                        while ($row = mysqli_fetch_assoc($candidates)) {
+                    ?>
                     <div>
-                        <h1 class="candidate-number">1</h1>
-                        <img src="images/image1.jpg" alt="Image 1">
-                        <h3 class="candidate-name">Neil Andrei Monroyo</h3>
+                        <h1 class="candidate-number"><?php echo $row['candidate_number'] ?></h1>
+                        <img src="uploads/<?php echo $row['image']; ?>" alt="Image 1">
+                        <h3 class="candidate-name"><?php echo $row['name']; ?></h3>
                     </div>
-                    <div>
-                        <h1 class="candidate-number">2</h1>
-                        <img src="images/image2.jpg" alt="Image 2">
-                        <h3 class="candidate-name">candidate </h3>
-                    </div>
-                    <div>
-                        <h1 class="candidate-number">3</h1>
-                        <img src="images/image3.jpg" alt="Image 3">
-                        <h3 class="candidate-name">candidate 3</h3>
-                    </div>
-                    <div>
-                        <h1 class="candidate-number">4</h1>
-                        <img src="images/image4.jpg" alt="Image 3">
-                        <h3 class="candidate-name">candidate 4</h3>
-                    </div>
-                    <div>
-                        <h1 class="candidate-number">5</h1>
-                        <img src="images/image5.jpg" alt="Image 3">
-                        <h3 class="candidate-name">candidate 5</h3>
-                    </div>
-                    <div>
-                        <h1 class="candidate-number">6</h1>
-                        <img src="images/image6.jpg" alt="Image 3">
-                        <h3 class="candidate-name">candidate 6</h3>
-                    </div>
-                    <div>
-                        <h1 class="candidate-number">6</h1>
-                        <img src="images/image6.jpg" alt="Image 3">
-                        <h3 class="candidate-name">candidate 6</h3>
-                    </div>
-                    <div>
-                        <h1 class="candidate-number">6</h1>
-                        <img src="images/image6.jpg" alt="Image 3">
-                        <h3 class="candidate-name">candidate 6</h3>
-                    </div>
-                    <div>
-                        <h1 class="candidate-number">6</h1>
-                        <img src="images/image6.jpg" alt="Image 3">
-                        <h3 class="candidate-name">candidate 6</h3>
-                    </div>
-                    <div>
-                        <h1 class="candidate-number">6</h1>
-                        <img src="images/image6.jpg" alt="Image 3">
-                        <h3 class="candidate-name">candidate 6</h3>
-                    </div>
-                    <div>
-                        <h1 class="candidate-number">6</h1>
-                        <img src="images/image6.jpg" alt="Image 3">
-                        <h3 class="candidate-name">candidate 6</h3>
-                    </div>
-                    <div>
-                        <h1 class="candidate-number">6</h1>
-                        <img src="images/image6.jpg" alt="Image 3">
-                        <h3 class="candidate-name">candidate 6</h3>
-                    </div>
-                    <div>
-                        <h1 class="candidate-number">6</h1>
-                        <img src="images/image6.jpg" alt="Image 3">
-                        <h3 class="candidate-name">candidate 6</h3>
-                    </div>
-                    <div>
-                        <h1 class="candidate-number">6</h1>
-                        <img src="images/image6.jpg" alt="Image 3">
-                        <h3 class="candidate-name">candidate 6</h3>
-                    </div>
+                    <?php } ?>
+
                 </div>
                 <button class="prev" onclick="prevSlide()">Prev</button>
                 <button class="next" onclick="nextSlide()">Next</button>
             </div>
         </div>
 
-        <div class="criteria-container">
+        <form class="criteria-container">
             <h5>Criteria for Judging</h5>
             <div class="criteria-inputs">
                 <label class="form-label" for="">Poise and Bearing (30%)</label>
-                <input class="form-control" type="number" min="0" max="100">
+                <input class="form-control thirty" type="number" min="0" max="30">
             </div>
             <div class="criteria-inputs">
                 <label class="form-label" for="">Stage Presence (25%)</label>
-                <input class="form-control" type="number" min="0" max="100">
-            </div>            
+                <input class="form-control twentyFive" type="number" min="0" max="30">
+            </div>
             <div class="criteria-inputs">
                 <label class="form-label" for="">Fitness and Style (25%)</label>
-                <input class="form-control" type="number" min="0" max="100">
+                <input class="form-control twentyFive" type="number" min="0" max="30">
             </div>            
             <div class="criteria-inputs" style="border-bottom: 2px solid black; padding-bottom: 8px;">
                 <label class="form-label" for="">Elegance (20%)</label>
-                <input class="form-control" type="number" min="0" max="100">
+                <input class="form-control twenty" type="number">
             </div>
 
             <div class="total-wrapper">
                 <label for="">Total</label>
                 <div class="total-inputs">
-                    <input class="form-control" type="number" min="0" max="100">
+                    <input class="form-control oneHundred" type="number" min="0" max="100">
                     <input class="btn btn-primary" type="submit" value="submit">
                 </div>
             </div>
-        </div>
+        </form>
     </div>
+
+
+    <script>
+
+        function limitInput (cName, limit) {
+            let limitTwenty = document.querySelectorAll(`.${cName}`);
+
+            for (let i = 0; i < limitTwenty.length; i++) {
+            // Add event listener to the input field
+            limitTwenty[i].addEventListener('input', function() {
+                // Get the current value of the input field
+                let value = parseInt(limitTwenty[i].value);
+
+                // Check if the value is greater than 30
+                if (value > limit) {
+                    // If greater than 30, set the value to 30
+                    limitTwenty[i].value = limit;
+                }
+            });
+            }
+        }
+
+        limitInput('twenty', 20);
+        limitInput('twentyFive', 25);
+        limitInput('thirty', 30);
+        limitInput('forty', 40);
+        limitInput('thirtyFive', 35);
+        limitInput('oneHundred', 100);
+
+
+
+    </script>
 </body>
 
 </html>

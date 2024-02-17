@@ -117,7 +117,7 @@
             <form method="post" class="modal-main-content" enctype="multipart/form-data" style="margin: 50px 0;">
                 <div class="modal-inputs">
                     <label for="">Number:</label>
-                    <input class="form-control" type="text" name="candidate-number" value="<?php echo $candidate_number; ?>" required>
+                    <input class="form-control" type="number" name="candidate-number" value="<?php echo $candidate_number; ?>" required>
                 </div>
                 <div class="modal-inputs">
                     <label for="">Name:</label>

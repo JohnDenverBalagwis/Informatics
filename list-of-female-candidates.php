@@ -169,7 +169,7 @@ $candidateNumber = $admin->select('female_candidates', '*')->num_rows + 1;
             <form method="post" class="modal-main-content" enctype="multipart/form-data">
                 <div class="modal-inputs">
                     <label for="">Number:</label>
-                    <input class="form-control" type="text" name="candidate-number" value="<?php echo $candidateNumber; ?>" required>
+                    <input class="form-control" type="number" name="candidate-number" value="<?php echo $candidateNumber; ?>" required>
                 </div>
                 <div class="modal-inputs">
                     <label for="">Name:</label>
