@@ -177,7 +177,7 @@ $candidateNumber = $admin->select('female_candidates', '*')->num_rows + 1;
                 </div>
                 <div class="modal-inputs">
                     <label for="">Age:</label>
-                    <input class="form-control" type="number" name="age" min="0" max="50" required>
+                    <input class="form-control fifty" type="number" name="age" required>
                 </div>
                 <div class="modal-inputs">
                     <label for="">Course:</label>
@@ -212,6 +212,26 @@ $candidateNumber = $admin->select('female_candidates', '*')->num_rows + 1;
           popup.style.display = "none"; // Hide the popup
       }, 1500);
     }
+
+    function limitInput (cName, limit) {
+        let limitTwenty = document.querySelectorAll(`.${cName}`);
+
+        for (let i = 0; i < limitTwenty.length; i++) {
+        // Add event listener to the input field
+        limitTwenty[i].addEventListener('input', function() {
+            // Get the current value of the input field
+            let value = parseInt(limitTwenty[i].value);
+
+            // Check if the value is greater than 30
+            if (value > limit) {
+                // If greater than 30, set the value to 30
+                limitTwenty[i].value = limit;
+            }
+        });
+        }
+    }
+
+    limitInput('fifty', 50);
 
     </script>
     

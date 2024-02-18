@@ -53,32 +53,42 @@ $judges = new database();
             </div>
         </div>
 
-        <form class="criteria-container">
-            <h5>Criteria for Judging</h5>
-            <div class="criteria-inputs">
-                <label class="form-label" for="">Poise and Bearing (30%)</label>
-                <input class="form-control thirty" type="number" min="0" max="30">
-            </div>
-            <div class="criteria-inputs">
-                <label class="form-label" for="">Stage Presence (25%)</label>
-                <input class="form-control twentyFive" type="number" min="0" max="30">
-            </div>
-            <div class="criteria-inputs">
-                <label class="form-label" for="">Fitness and Style (25%)</label>
-                <input class="form-control twentyFive" type="number" min="0" max="30">
-            </div>            
-            <div class="criteria-inputs" style="border-bottom: 2px solid black; padding-bottom: 8px;">
-                <label class="form-label" for="">Elegance (20%)</label>
-                <input class="form-control twenty" type="number">
-            </div>
+        <form class="scoring-container">
+            <table class="table table-striped candidate-table">
+                <thead>
+                    <tr>
+                        <th>Candidate Name</th>
+                        <th>Poise and Bearing</th>
+                        <th>Fitness</th>
+                        <th>Uniqueness and Style</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                        $candidates = $judges->mysqli->query("SELECT * FROM male_candidates ORDER BY candidate_number ASC");
 
-            <div class="total-wrapper">
-                <label for="">Total</label>
-                <div class="total-inputs">
-                    <input class="form-control oneHundred" type="number" min="0" max="100">
-                    <input class="btn btn-primary" type="submit" value="submit">
-                </div>
-            </div>
+                        while ($row = mysqli_fetch_assoc($candidates)) {
+                    ?>
+                    <tr>
+                        <td>
+                            <h5 class="text-start"><?php echo $row['name']; ?></h5>
+                        </td>
+                        <td>
+                            <input style="width: 3.8rem;" class="candidate-input form-control mx-auto thirty" type="number" name="poise-and-bearing" required>
+                        </td>
+                        <td>
+                            <input style="width: 3.8rem;" class="candidate-input form-control mx-auto thirty" type="number" name="fitness" required>
+                        </td>
+                        <td>
+                            <input style="width: 3.8rem;" class="candidate-input form-control mx-auto forty" type="number" name="uniqueness-and-style" required>
+                        </td>
+                    </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+
+            <input class="btn btn-primary" type="submit">
+
         </form>
     </div>
 
