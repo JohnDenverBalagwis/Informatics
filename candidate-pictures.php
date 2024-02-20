@@ -26,7 +26,7 @@ $judges = new database();
                 <div class="college">COLLEGE</div>
             </div>
         </nav>
-        <a class="vote-btn" href="image-slider.php">Vote Now.</a>
+        <a class="vote-btn" href="production-number-female.php">Vote Now.</a>
         <div class="candidate-list">
 
             <div class="container">

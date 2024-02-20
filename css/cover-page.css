@@ -16,13 +16,14 @@
   margin: 0;
   box-sizing: border-box;
   font-family: var(--Michroma-Font);
+  font-size: .9rem;
 }
 body {
   min-height: 100%;
   height: 100vh;
-  overflow: hidden;
+  overflow: auto;
   position: relative;
-  /* background-image: url("images/f3d5cdde97d5f679b17bf29c117badf4 1.png"); */
+  background-image: url("images/lighting.png");
   background-size: cover;
   background-position: center;
   /* background: rgb(4, 20, 74);
@@ -56,7 +57,7 @@ body::after {
   right: 0;
   bottom: 0;
   left: 0;
-  background-image: url("images/f3d5cdde97d5f679b17bf29c117badf4 1.png");
+  background-image: url("images/lighting.png");
   background-size: cover;
   background-position: center;
   z-index: 2;

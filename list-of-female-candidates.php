@@ -20,6 +20,9 @@ if (isset($_POST['submit'])) {
       $admin->insertData('female_candidates', ['name'=>$name, 'age'=>$age, 'course'=>$course, 'candidate_number'=>$candidate_number]);
       $admin->insertImage('candidate-image', 'female_candidates', 'image', 'uploads/');
 
+      $candidateNumber = $admin->select('male_candidates', '*')->num_rows + 1;
+
+
 
       $candidateAdded = true;
     } else {
@@ -62,8 +65,9 @@ $candidateNumber = $admin->select('female_candidates', '*')->num_rows + 1;
         </div>
 
         <div class="nav-links">
+
             <div class="dropdown">
-                <a onclick="myFunction()" class="dropbtn"><i class="fa-regular fa-user"></i>Candidates <i class="fa-solid fa-angle-down"></i></a></a>
+                <a onclick="myFunction()" class="dropbtn"><i class="fa-regular fa-user"></i>Candidates <i class="fa-solid fa-angle-down"></i></a>
                 <div id="myDropdown" class="dropdown-content">
                     <a href="list-of-male-candidates.php">Mr.</a>
                     <a href="list-of-female-candidates.php">Ms.</a>
@@ -71,7 +75,7 @@ $candidateNumber = $admin->select('female_candidates', '*')->num_rows + 1;
             </div>
 
             <div class="dropdown">
-                <a onclick="myFunction2()" class="dropbtn"><i class="fa-solid fa-square-poll-vertical"></i>votes/rankings <i class="fa-solid fa-angle-down"></i></a></a>
+                <a onclick="myFunction2()" class="dropbtn"><i class="fa-solid fa-square-poll-vertical"></i>votes/rankings <i class="fa-solid fa-angle-down"></i></a>
 
                 <div id="myDropdown2" class="dropdown-content2">
                     <a href="/ranking-male.php">Mr.</a>
@@ -79,7 +83,15 @@ $candidateNumber = $admin->select('female_candidates', '*')->num_rows + 1;
                 </div>
             </div>
 
-            <a href="#"> <i class="fa-solid fa-square-poll-vertical"></i> summary</a>
+            <div class="dropdown">
+                <a onclick="myFunction3()" class="dropbtn"><i class="fa-solid fa-square-poll-vertical"></i>Summary <i class="fa-solid fa-angle-down"></i></a>
+
+                <div id="myDropdown3" class="dropdown-content3">
+                    <a href="">Mr.</a>
+                    <a href="">Ms.</a>
+                </div>
+            </div>
+
         </div>
     </div>
 

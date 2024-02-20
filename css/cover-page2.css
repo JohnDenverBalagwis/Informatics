@@ -16,6 +16,8 @@
   margin: 0;
   box-sizing: border-box;
   font-family: var(--Michroma-Font);
+  font-size: .9rem;
+
 }
 body {
   min-height: 100%;

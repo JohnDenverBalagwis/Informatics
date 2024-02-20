@@ -17,6 +17,7 @@
   margin: 0;
   box-sizing: border-box;
   font-family: var(--Michroma-Font);
+  font-size: .9rem;
 }
 
 body {
@@ -151,5 +152,12 @@ input[type=number] {
   text-align: center;
   overflow-y: auto;
   max-height: 80vh;
+  padding-bottom: 10px;
+}
+
+.scoring-container table thead tr th {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
 }
 
