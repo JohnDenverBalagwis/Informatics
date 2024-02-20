@@ -1,3 +1,24 @@
+<?php 
+include "classes/database.php";
+
+$judges = new database();
+
+$judgeDoesntExist = false;
+
+if (isset($_POST['submit'])) {
+    $username = mysqli_escape_string($judges->mysqli, $_POST['username']);
+
+    if ($judges->isExisted('judges', ['username'=>$username])) {
+        $_SESSION['username'] = $username;
+        header("location: candidate-pictures.php");
+    } else {
+        $judgeDoesntExist = true;
+    }
+}
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,10 +29,27 @@
     <link rel="stylesheet" href="css/cover-page.css">
     <link rel="shortcut icon" href="images/infor.png" type="image/x-icon">
     <title>Informatics</title>
+
+    <style>
+        #popup {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 20px;
+        background-color: #002e57;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(204, 204, 204, 0.3);
+        color: white;
+        z-index: 9;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="container">
+    <form method="post" class="container">
         <nav class="upper-logo">
             <figure class="logo">
                 <img src="images/info logo.png" alt="logo">
@@ -19,7 +57,7 @@
             <div class="name">
                 <div class="informatics">Informatics</div>
                 <div class="college">COLLEGE</div>
-                <a href="candidate-pictures.php" class="get-started-btn">Get Started</a>
+                <input type="submit" name="submit" class="get-started-btn" value="Get Started">
             </div>
         </nav>
         <div class="hero-container">
@@ -32,11 +70,36 @@
                     <h2 class="mrandms">Mr & Ms</h2>
                     <h1 class="icon">Icon</h1>
                 </div>
-                <input type="text" placeholder="Username" id="Username"><br><br>
+                <input name="username" type="text" placeholder="Username" id="Username" required>
 
             </div>
         </div>
+    </form>
+
+    
+    <div id="popup">
+      <p id="popupMessage"></p>
     </div>
+
+    <script>
+        function showPopup(message) {
+        var popup = document.getElementById("popup");
+        document.getElementById('popupMessage').innerHTML = message;
+        popup.style.display = "block"; // Show the popup
+
+        // Automatically close the popup after 2 seconds
+        setTimeout(function() {
+            popup.style.display = "none"; // Hide the popup
+        }, 1500);
+        }
+    </script>
+
+
+    <?php
+
+        echo "<script>showPopup('Invalid Username');</script>";
+      
+    ?>
 
 </body>
 

@@ -3,36 +3,19 @@ include "classes/database.php";
 
 $admin = new database();
 
-$candidateExist = false;
-$candidateAdded = false;
-$wrong_file = false;
+$judgeExist = false;
 
 if (isset($_POST['submit'])) {
-  $candidate_number = $_POST['candidate-number'];
-  $name = mysqli_escape_string($admin->mysqli, $_POST['name']);
-  $age = mysqli_escape_string($admin->mysqli, $_POST['age']);
-  $course = mysqli_escape_string($admin->mysqli, $_POST['course']);
+    $name = mysqli_escape_string($admin->mysqli, $_POST['name']);
 
-  if ($admin->isExisted('female_candidates', ['name'=>$name])) {
-    $candidateExist = true;
-  } else if ($admin->checkIfImage('candidate-image')) {
-    
-      $admin->insertData('female_candidates', ['name'=>$name, 'age'=>$age, 'course'=>$course, 'candidate_number'=>$candidate_number]);
-      $admin->insertImage('candidate-image', 'female_candidates', 'image', 'uploads/');
-
-      $candidateNumber = $admin->select('male_candidates', '*')->num_rows + 1;
-
-
-
-      $candidateAdded = true;
+    if ($admin->isExisted('judges', ['username'=>$name])) {
+        $judgeExist = true;
     } else {
-      $wrong_file = true;
+        $admin->insertData('judges', ['username'=>$name]);
     }
+} else if (isset($_POST['delete'])) {
+    
 }
-
-$candidateNumber = $admin->select('female_candidates', '*')->num_rows + 1;
-
-
 
 ?>
 
@@ -102,41 +85,29 @@ $candidateNumber = $admin->select('female_candidates', '*')->num_rows + 1;
 
 
 
-        <div class="box">
+        <div class="box" style="max-width: 36rem;">
           <button id="myBtn" class="add-candidate-button">
             Add
           </button>
 
-          <table class="table table-striped">
+          <table class="table table-striped" style="border-top: 1px solid rgb(90, 90, 90)">
             <thead>
               <tr>
-                <th>Number</th>
                 <th>Name</th>
-                <th>Age</th>
-                <th>Course</th>
-                <th>Image</th>
-                <th>Action</th>
+                <th style="width: 2rem;">Action</th>
               </tr>
             </thead>
             <tbody>
-            <?php
-
-                 $candidates = $admin->mysqli->query("select * from female_candidates ORDER BY candidate_number ASC");
-
-
-
-                  while ($row = mysqli_fetch_assoc($candidates)) {
+                <?php
+                    $judges = $admin->select('judges', '*');
+                    
+                    while ($row = mysqli_fetch_assoc($judges)) {
                 ?>
                 <tr>
-                  <td><?php echo $row['candidate_number']; ?></td>
-                  <td><?php echo $row["name"]; ?></td>
-                  <td><?php echo $row["age"]; ?></td>
-                  <td><?php echo $row["course"]; ?></td>
-                  <td><img src="uploads/<?php echo $row['image']; ?>" style="width: 5rem; cursor: pointer;" alt="candidate"></td>
-                  <td>
-                    <a class="btn btn-secondary" style="font-size: .7rem; padding: 2px 5px" href="edit-candidate.php?id=<?php echo $row['id']; ?>&sex=female">Edit</a>
-                    
-                      <!-- Button trigger modal -->
+                    <td><?php echo $row['username']; ?></td>
+                    <td>
+
+                                              <!-- Button trigger modal -->
                       <button type="button" class="btn btn-danger" style="font-size: .7rem; padding: 2px 5px" data-bs-toggle="modal" data-bs-target="#exampleModal<?php echo $row['id']; ?>">
                         Delete
                       </button>
@@ -155,51 +126,35 @@ $candidateNumber = $admin->select('female_candidates', '*')->num_rows + 1;
                             </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-secondary"  style="font-size: .7rem; padding: 2px 5px" data-bs-dismiss="modal">Cancel</button>
-                              <a class="btn btn-danger" style="font-size: .7rem; padding: 2px 5px" href="delete-candidate.php?id=<?php echo $row['id']; ?>&url=<?php echo $row['image']; ?>&sex=female">Delete</a>
+                              <a class="btn btn-danger" style="font-size: .7rem; padding: 2px 5px" href="delete-candidate.php?id=<?php echo $row['id']; ?>">Delete</a>
                             </div>
                           </div>
                         </div>
                       </div>
 
 
-                  </td>
+
+                    </td>
                 </tr>
-                <?php
-                  }
-                ?>
+                <?php } ?>
             </tbody>
           </table>
         </div>
 
     </div>
 
+    
     <div id="myModal" class="modal">
         <div class="modal-body">
             <div class="modal-content">
                 <span class="close">&times;</span>
-                <h4>Registration</h4>
+                <h4>Add Judges</h4>
             </div>
 
-            <form method="post" class="modal-main-content" enctype="multipart/form-data">
-                <div class="modal-inputs">
-                    <label for="">Number:</label>
-                    <input class="form-control" type="number" name="candidate-number" value="<?php echo $candidateNumber; ?>" required>
-                </div>
+            <form method="post" class="modal-main-content">
                 <div class="modal-inputs">
                     <label for="">Name:</label>
                     <input class="form-control" type="text" name="name" required>
-                </div>
-                <div class="modal-inputs">
-                    <label for="">Age:</label>
-                    <input class="form-control fifty" type="number" name="age" required>
-                </div>
-                <div class="modal-inputs">
-                    <label for="">Course:</label>
-                    <input class="form-control" type="text" name="course" required>
-                </div>
-                <div class="modal-inputs" class="input-group mb-3">
-                    <label class="form-label">Image</label>
-                    <input type="file" class="form-control" name="candidate-image" id="inputGroupFile01" required>
                 </div>
     
                 <div class="modal-buttons">
@@ -216,56 +171,28 @@ $candidateNumber = $admin->select('female_candidates', '*')->num_rows + 1;
     </div>
 
     <script>
-      function showPopup(message) {
-      var popup = document.getElementById("popup");
-      document.getElementById('popupMessage').innerHTML = message;
-      popup.style.display = "block"; // Show the popup
+        function showPopup(message) {
+        var popup = document.getElementById("popup");
+        document.getElementById('popupMessage').innerHTML = message;
+        popup.style.display = "block"; // Show the popup
 
-      // Automatically close the popup after 2 seconds
-      setTimeout(function() {
-          popup.style.display = "none"; // Hide the popup
-      }, 1500);
-    }
-
-    function limitInput (cName, limit) {
-        let limitTwenty = document.querySelectorAll(`.${cName}`);
-
-        for (let i = 0; i < limitTwenty.length; i++) {
-        // Add event listener to the input field
-        limitTwenty[i].addEventListener('input', function() {
-            // Get the current value of the input field
-            let value = parseInt(limitTwenty[i].value);
-
-            // Check if the value is greater than 30
-            if (value > limit) {
-                // If greater than 30, set the value to 30
-                limitTwenty[i].value = limit;
-            }
-        });
+        // Automatically close the popup after 2 seconds
+        setTimeout(function() {
+            popup.style.display = "none"; // Hide the popup
+        }, 1500);
         }
-    }
-
-    limitInput('fifty', 50);
-
     </script>
-    
 
 
 
 
     <?php
-      if ($candidateExist) {
-        echo "<script>showPopup('candidate already exist');</script>";
-      } else if ($candidateAdded) {
-        echo "<script>showPopup('candidate added successfully');</script>"; 
-      } else if ($wrong_file) {
-        echo "<script>showPopup('upload only jpg, jpeg and png files');</script>";
+      if ($judgeExist) {
+        echo "<script>showPopup('judge already exist');</script>";
       } else if (isset($_GET['deleted'])) {
-        echo "<script>showPopup('candidate deleted successfully');</script>";
+        echo "<script>showPopup('judge deleted');</script>";
       }
     ?>
-
-
 
 </body>
 
