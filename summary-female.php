@@ -76,7 +76,7 @@
     </div>
 
     <div id="main">
-        <div id="title">list of male candidates</div>
+        <div id="title">list of female candidates</div>
 
 
 
@@ -90,7 +90,7 @@
                     <tr>
                         <th>contestant</th>
                     <?php
-                        $production_number_result = $admin->mysqli->query("SELECT DISTINCT judge_name FROM male_production_number");
+                        $production_number_result = $admin->mysqli->query("SELECT DISTINCT judge_name FROM female_production_number");
 
                         while ($row = mysqli_fetch_assoc($production_number_result)) {
                     ?>
@@ -102,15 +102,15 @@
                 <tbody>
                     <tbody>
                         <?php
-                            $production_number_result = $admin->mysqli->query("SELECT DISTINCT male_candidate_id FROM male_production_number ORDER BY judge_name DESC, male_candidate_id DESC");
+                            $production_number_result = $admin->mysqli->query("SELECT DISTINCT female_candidate_id FROM female_production_number ORDER BY judge_name DESC, female_candidate_id DESC");
 
                             while ($row = mysqli_fetch_assoc($production_number_result)) {
                         ?>
                             <tr>
-                                <td><?php echo $admin->getName('male_candidates', $row['male_candidate_id'], "name"); ?></td>
+                                <td><?php echo $admin->getName('female_candidates', $row['female_candidate_id'], "name"); ?></td>
 
                                 <?php
-                                    $judges_score = $admin->mysqli->query("SELECT * FROM male_production_number WHERE male_candidate_id = $row[male_candidate_id] ORDER BY judge_name DESC");
+                                    $judges_score = $admin->mysqli->query("SELECT * FROM female_production_number WHERE female_candidate_id = $row[female_candidate_id] ORDER BY judge_name DESC");
 
                                     while ($row2 = mysqli_fetch_assoc($judges_score)) {
                                 ?>
@@ -131,7 +131,7 @@
                     <tr>
                         <th>contestant</th>
                     <?php
-                        $casual_wear_result = $admin->mysqli->query("SELECT DISTINCT judge_name FROM male_casual_wear");
+                        $casual_wear_result = $admin->mysqli->query("SELECT DISTINCT judge_name FROM female_casual_wear");
 
                         while ($row = mysqli_fetch_assoc($casual_wear_result)) {
                     ?>
@@ -143,15 +143,15 @@
                 <tbody>
                     <tbody>
                         <?php
-                            $casual_wear_result = $admin->mysqli->query("SELECT DISTINCT male_candidate_id FROM male_casual_wear ORDER BY judge_name DESC, male_candidate_id DESC");
+                            $casual_wear_result = $admin->mysqli->query("SELECT DISTINCT female_candidate_id FROM female_casual_wear ORDER BY judge_name DESC, female_candidate_id DESC");
 
                             while ($row = mysqli_fetch_assoc($casual_wear_result)) {
                         ?>
                             <tr>
-                                <td><?php echo $admin->getName('male_candidates', $row['male_candidate_id'], "name"); ?></td>
+                                <td><?php echo $admin->getName('female_candidates', $row['female_candidate_id'], "name"); ?></td>
 
                                 <?php
-                                    $judges_score = $admin->mysqli->query("SELECT * FROM male_casual_wear WHERE male_candidate_id = $row[male_candidate_id] ORDER BY judge_name DESC");
+                                    $judges_score = $admin->mysqli->query("SELECT * FROM female_casual_wear WHERE female_candidate_id = $row[female_candidate_id] ORDER BY judge_name DESC");
 
                                     while ($row2 = mysqli_fetch_assoc($judges_score)) {
                                 ?>
@@ -174,7 +174,7 @@
                     <tr>
                         <th>contestant</th>
                     <?php
-                        $sports_wear_result = $admin->mysqli->query("SELECT DISTINCT judge_name FROM male_sports_wear");
+                        $sports_wear_result = $admin->mysqli->query("SELECT DISTINCT judge_name FROM female_sports_wear");
 
                         while ($row = mysqli_fetch_assoc($sports_wear_result)) {
                     ?>
@@ -186,15 +186,15 @@
                 <tbody>
                     <tbody>
                         <?php
-                            $sports_wear_result = $admin->mysqli->query("SELECT DISTINCT male_candidate_id FROM male_sports_wear ORDER BY judge_name DESC, male_candidate_id DESC");
+                            $sports_wear_result = $admin->mysqli->query("SELECT DISTINCT female_candidate_id FROM female_sports_wear ORDER BY judge_name DESC, female_candidate_id DESC");
 
                             while ($row = mysqli_fetch_assoc($sports_wear_result)) {
                         ?>
                             <tr>
-                                <td><?php echo $admin->getName('male_candidates', $row['male_candidate_id'], "name"); ?></td>
+                                <td><?php echo $admin->getName('female_candidates', $row['female_candidate_id'], "name"); ?></td>
 
                                 <?php
-                                    $judges_score = $admin->mysqli->query("SELECT * FROM male_sports_wear WHERE male_candidate_id = $row[male_candidate_id] ORDER BY judge_name DESC");
+                                    $judges_score = $admin->mysqli->query("SELECT * FROM female_sports_wear WHERE female_candidate_id = $row[female_candidate_id] ORDER BY judge_name DESC");
 
                                     while ($row2 = mysqli_fetch_assoc($judges_score)) {
                                 ?>
@@ -217,7 +217,7 @@
                     <tr>
                         <th>contestant</th>
                     <?php
-                        $formal_attire_result = $admin->mysqli->query("SELECT DISTINCT judge_name FROM male_formal_attire");
+                        $formal_attire_result = $admin->mysqli->query("SELECT DISTINCT judge_name FROM female_formal_attire");
 
                         while ($row = mysqli_fetch_assoc($formal_attire_result)) {
                     ?>
@@ -229,15 +229,15 @@
                 <tbody>
                     <tbody>
                         <?php
-                            $formal_attire_result = $admin->mysqli->query("SELECT DISTINCT male_candidate_id FROM male_formal_attire ORDER BY judge_name DESC, male_candidate_id DESC");
+                            $formal_attire_result = $admin->mysqli->query("SELECT DISTINCT female_candidate_id FROM female_formal_attire ORDER BY judge_name DESC, female_candidate_id DESC");
 
                             while ($row = mysqli_fetch_assoc($formal_attire_result)) {
                         ?>
                             <tr>
-                                <td><?php echo $admin->getName('male_candidates', $row['male_candidate_id'], "name"); ?></td>
+                                <td><?php echo $admin->getName('female_candidates', $row['female_candidate_id'], "name"); ?></td>
 
                                 <?php
-                                    $judges_score = $admin->mysqli->query("SELECT * FROM male_formal_attire WHERE male_candidate_id = $row[male_candidate_id] ORDER BY judge_name DESC");
+                                    $judges_score = $admin->mysqli->query("SELECT * FROM female_formal_attire WHERE female_candidate_id = $row[female_candidate_id] ORDER BY judge_name DESC");
 
                                     while ($row2 = mysqli_fetch_assoc($judges_score)) {
                                 ?>

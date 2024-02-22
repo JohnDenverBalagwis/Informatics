@@ -3,7 +3,11 @@ include "classes/database.php";
 
 $judges = new database();
 
+session_start();
+
 $candidates = $judges->mysqli->query("SELECT * FROM female_candidates ORDER BY candidate_number ASC");
+
+$name = $_SESSION['name'];
 
 if (isset($_POST['submit'])) {
     while ($row = mysqli_fetch_assoc($candidates)) {
@@ -14,7 +18,7 @@ if (isset($_POST['submit'])) {
         $stage_deportment = $_POST["stage-deportment$id"];
 
 
-        $judges->insertData('female_casual_wear', ['female_candidate_id'=>$id, 'poise_and_bearing'=>$poise_and_bearing, 'fitness'=>$fitness, 'stage_deportment'=>$stage_deportment]);
+        $judges->insertData('female_casual_wear', ['female_candidate_id'=>$id, 'judge_name'=>$name, 'poise_and_bearing'=>$poise_and_bearing, 'fitness'=>$fitness, 'stage_deportment'=>$stage_deportment]);
     }
 
     header("location: casual-wear-male.php");
@@ -181,8 +185,8 @@ if (isset($_POST['submit'])) {
             }
         }
 
-        limitInput('thirty', 30);
         limitInput('forty', 40);
+        limitInput('thirty', 30);
 
 
 

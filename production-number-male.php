@@ -3,6 +3,10 @@ include "classes/database.php";
 
 $judges = new database();
 
+session_start();
+
+$name = $_SESSION['name'];
+
 $candidates = $judges->mysqli->query("SELECT * FROM male_candidates ORDER BY candidate_number ASC");
 
 if (isset($_POST['submit'])) {
@@ -14,7 +18,7 @@ if (isset($_POST['submit'])) {
         $uniqueness_and_style = $_POST["uniqueness-and-style$id"];
 
 
-        $judges->insertData('male_production_number', ['male_candidate_id'=>$id, 'poise_and_bearing'=>$poise_and_bearing, 'fitness'=>$fitness, 'uniqueness_and_style'=>$uniqueness_and_style]);
+        $judges->insertData('male_production_number', ['male_candidate_id'=>$id,  'judge_name'=>$name, 'poise_and_bearing'=>$poise_and_bearing, 'fitness'=>$fitness, 'uniqueness_and_style'=>$uniqueness_and_style]);
     }
 
     header("location: casual-wear-female.php");
@@ -102,13 +106,13 @@ if (isset($_POST['submit'])) {
                             <h5 class="text-start"><?php echo $row['name']; ?></h5>
                         </td>
                         <td>
-                            <input style="width: 4.6rem;" class="candidate-input form-control mx-auto oneHundred" type="number" name="poise-and-bearing<?php echo $row['id']; ?>" required>
+                            <input style="width: 4.6rem;" class="candidate-input form-control mx-auto thirty" type="number" name="poise-and-bearing<?php echo $row['id']; ?>" required>
                         </td>
                         <td>
-                            <input style="width: 4.6rem;" class="candidate-input form-control mx-auto oneHundred" type="number" name="fitness<?php echo $row['id']; ?>" required>
+                            <input style="width: 4.6rem;" class="candidate-input form-control mx-auto thirty" type="number" name="fitness<?php echo $row['id']; ?>" required>
                         </td>
                         <td>
-                            <input style="width: 4.6rem;" class="candidate-input form-control mx-auto oneHundred" type="number" name="uniqueness-and-style<?php echo $row['id']; ?>" required>
+                            <input style="width: 4.6rem;" class="candidate-input form-control mx-auto forty" type="number" name="uniqueness-and-style<?php echo $row['id']; ?>" required>
                         </td>
                     </tr>
                     <?php } ?>
@@ -164,11 +168,19 @@ if (isset($_POST['submit'])) {
             }
         }
 
-        limitInput('oneHundred', 100);
+        limitInput('forty', 40);
+        limitInput('thirty', 30);
 
 
 
     </script>
+
+    <?php 
+        if (!isset($_SESSION['production-number-male'])) {
+            echo "<script>showPopup('Submitted Sucessfully');</script>";
+            $_SESSION['production-number-male'] = true;
+        }
+    ?>
 </body>
 
 </html>

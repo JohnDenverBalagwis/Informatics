@@ -440,4 +440,10 @@ class database
     $sql = "SELECT * FROM $table WHERE ($where) AND $column1 LIKE '%$value%';";   
     return $this->mysqli->query($sql);
   }
+
+  public function getName($table, $id, $name) {
+    $sql = "SELECT * FROM $table WHERE id = $id";
+
+    return mysqli_fetch_assoc($this->mysqli->query($sql))[$name];
+  }
 }

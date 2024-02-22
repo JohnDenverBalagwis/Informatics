@@ -3,14 +3,23 @@ include "classes/database.php";
 
 $judges = new database();
 
+session_start();
+
+
 $judgeDoesntExist = false;
 
 if (isset($_POST['submit'])) {
     $username = mysqli_escape_string($judges->mysqli, $_POST['username']);
 
     if ($judges->isExisted('judges', ['username'=>$username])) {
-        $_SESSION['username'] = $username;
+
+        $name = $judges->select('judges', '*', ['username'=>$username]);
+
+        $_SESSION['name'] = mysqli_fetch_assoc($name)['username'];
+
+
         header("location: candidate-pictures.php");
+
     } else {
         $judgeDoesntExist = true;
     }

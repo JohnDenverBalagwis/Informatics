@@ -3,6 +3,9 @@ include "classes/database.php";
 
 $admin = new database();
 
+session_start();
+
+
 $candidateNumber = $admin->select('male_candidates', '*')->num_rows + 1;
 
 $candidateExist = false;
@@ -69,6 +72,10 @@ if (isset($_POST['submit'])) {
         </div>
 
         <div class="nav-links">
+
+            <a href="judges.php"><i class="fa-regular fa-user"></i>Judges</a>
+
+
             <div class="dropdown">
                 <a onclick="myFunction();" class="dropbtn"><i class="fa-regular fa-user"></i>Candidates <i class="fa-solid fa-angle-down"></i></a></a>
                 <div id="myDropdown" class="dropdown-content">
@@ -81,7 +88,7 @@ if (isset($_POST['submit'])) {
                 <a onclick="myFunction2();" class="dropbtn"><i class="fa-solid fa-square-poll-vertical"></i>votes/rankings <i class="fa-solid fa-angle-down"></i></a></a>
 
                 <div id="myDropdown2" class="dropdown-content2">
-                    <a href="/ranking-male.php">Mr.</a>
+                    <a href="ranking-male.php">Mr.</a>
                     <a href="ranking-female.php">Ms.</a>
                 </div>
             </div>
@@ -92,8 +99,8 @@ if (isset($_POST['submit'])) {
                 <a onclick="myFunction3();" class="dropbtn"><i class="fa-solid fa-square-poll-vertical"></i>Summary <i class="fa-solid fa-angle-down"></i></a></a>
 
                 <div id="myDropdown3" class="dropdown-content3">
-                    <a href="/ranking-male.php">Mr.</a>
-                    <a href="ranking-female.php">Ms.</a>
+                  <a href="summary-male.php">Mr.</a>
+                  <a href="summary-female.php">Ms.</a>
                 </div>
             </div>
 

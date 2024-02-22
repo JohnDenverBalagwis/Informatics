@@ -1,7 +1,12 @@
 <?php
+
 include "classes/database.php";
 
 $judges = new database();
+
+session_start();
+
+$name = $_SESSION['name'];
 
 $candidates = $judges->mysqli->query("SELECT * FROM female_candidates ORDER BY candidate_number ASC");
 
@@ -13,11 +18,12 @@ if (isset($_POST['submit'])) {
         $substance = $_POST["substance$id"];
         $delivery = $_POST["delivery$id"];
 
-        $judges->insertData('qa_female', ['female_candidate_id'=>$id, 'spontaneity'=>$spontaneity, 'substance'=>$substance, 'delivery'=>$delivery]);
+        $judges->insertData('qa_female', ['female_candidate_id'=>$id, 'judge_name'=>$name, 'spontaneity'=>$spontaneity, 'substance'=>$substance, 'delivery'=>$delivery]);
     }
 
     header("location: qa-male.php");
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -43,7 +49,7 @@ if (isset($_POST['submit'])) {
             </div>
         </div>
 
-        <h3 class="title-category">Question and Answer Female 25%</h3>
+        <h3 class="title-category">question and answer portion female 100%</h3>
     </nav>
 
     <div class="main-container">
@@ -73,17 +79,17 @@ if (isset($_POST['submit'])) {
                     <tr>
                         <th style="padding: 0;">Candidate No.</th>
                         <th>Candidate Name</th>
-                        <th>Poise and Bearing
+                        <th>Spontaneity
                             <br>
                             <p class="fst-italic fw-lighter">30%</p>
                         </th>
-                        <th>Fitness
-                            <br>
-                            <p class="fst-italic fw-lighter">30%</p>
-                        </th>
-                        <th>Uniqueness and Style
+                        <th>Substance
                             <br>
                             <p class="fst-italic fw-lighter">40%</p>
+                        </th>
+                        <th>Delivery
+                            <br>
+                            <p class="fst-italic fw-lighter">30%</p>
                         </th>
                     </tr>
                 </thead>
@@ -101,20 +107,20 @@ if (isset($_POST['submit'])) {
                             <h5 class="text-start"><?php echo $row['name']; ?></h5>
                         </td>
                         <td>
-                            <input style="width: 4.6rem;" class="candidate-input form-control mx-auto oneHundred" type="number" name="spontaneity<?php echo $row['id']; ?>" required>
+                            <input style="width: 4.6rem;" class="candidate-input form-control mx-auto thirty" type="number" name="spontaneity<?php echo $row['id']; ?>" required>
                         </td>
                         <td>
-                            <input style="width: 4.6rem;" class="candidate-input form-control mx-auto oneHundred" type="number" name="substance<?php echo $row['id']; ?>" required>
+                            <input style="width: 4.6rem;" class="candidate-input form-control mx-auto forty" type="number" name="substance<?php echo $row['id']; ?>" required>
                         </td>
                         <td>
-                            <input style="width: 4.6rem;" class="candidate-input form-control mx-auto oneHundred" type="number" name="delivery<?php echo $row['id']; ?>" required>
+                            <input style="width: 4.6rem;" class="candidate-input form-control mx-auto thirty" type="number" name="delivery<?php echo $row['id']; ?>" required>
                         </td>
                     </tr>
                     <?php } ?>
                 </tbody>
             </table>
 
-                            
+
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Submit
             </button>
@@ -180,7 +186,9 @@ if (isset($_POST['submit'])) {
             }
         }
 
-        limitInput('oneHundred', 100);
+        limitInput('thirty', 30);
+        limitInput('forty', 40);
+
 
 
 
@@ -188,9 +196,9 @@ if (isset($_POST['submit'])) {
     </script>
 
     <?php 
-        if (!isset($_SESSION['production-number-female'])) {
+        if (!isset($_SESSION['qa-female'])) {
             echo "<script>showPopup('Submitted Sucessfully');</script>";
-            $_SESSION['production-number-female'] = true;
+            $_SESSION['qa-female'] = true;
         }
     ?>
 </body>

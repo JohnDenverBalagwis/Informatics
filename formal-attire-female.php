@@ -4,6 +4,10 @@ include "classes/database.php";
 
 $judges = new database();
 
+session_start();
+
+$name = $_SESSION['name'];
+
 $candidates = $judges->mysqli->query("SELECT * FROM female_candidates ORDER BY candidate_number ASC");
 
 if (isset($_POST['submit'])) {
@@ -15,7 +19,7 @@ if (isset($_POST['submit'])) {
         $fitness_and_style = $_POST["fitness-and-style$id"];
         $elegance = $_POST["elegance$id"];
 
-        $judges->insertData('female_formal_attire', ['female_candidate_id'=>$id, 'poise_and_bearing'=>$poise_and_bearing, 'stage_presence'=>$stage_presence, 'fitness_and_style'=>$fitness_and_style, 'elegance'=>$elegance]);
+        $judges->insertData('female_formal_attire', ['female_candidate_id'=>$id, 'judge_name'=>$name, 'poise_and_bearing'=>$poise_and_bearing, 'stage_presence'=>$stage_presence, 'fitness_and_style'=>$fitness_and_style, 'elegance'=>$elegance]);
     }
 
     header("location: formal-attire-male.php");
@@ -108,16 +112,16 @@ if (isset($_POST['submit'])) {
                             <h5 class="text-start"><?php echo $row['name']; ?></h5>
                         </td>
                         <td>
-                            <input style="width: 4.6rem;" class="candidate-input form-control mx-auto oneHundred" type="number" name="poise-and-bearing<?php echo $row['id']; ?>" required>
+                            <input style="width: 4.6rem;" class="candidate-input form-control mx-auto thirty" type="number" name="poise-and-bearing<?php echo $row['id']; ?>" required>
                         </td>
                         <td>
-                            <input style="width: 4.6rem;" class="candidate-input form-control mx-auto oneHundred" type="number" name="stage-presence<?php echo $row['id']; ?>" required>
+                            <input style="width: 4.6rem;" class="candidate-input form-control mx-auto twentyFive" type="number" name="stage-presence<?php echo $row['id']; ?>" required>
                         </td>
                         <td>
-                            <input style="width: 4.6rem;" class="candidate-input form-control mx-auto oneHundred" type="number" name="fitness-and-style<?php echo $row['id']; ?>" required>
+                            <input style="width: 4.6rem;" class="candidate-input form-control mx-auto twentyFive" type="number" name="fitness-and-style<?php echo $row['id']; ?>" required>
                         </td>
                         <td>
-                            <input style="width: 4.6rem;" class="candidate-input form-control mx-auto oneHundred" type="number" name="elegance<?php echo $row['id']; ?>" required>
+                            <input style="width: 4.6rem;" class="candidate-input form-control mx-auto twenty" type="number" name="elegance<?php echo $row['id']; ?>" required>
                         </td>
                     </tr>
                     <?php } ?>
@@ -190,7 +194,10 @@ if (isset($_POST['submit'])) {
             }
         }
 
-        limitInput('oneHundred', 100);
+        limitInput('twentyFive', 25);
+        limitInput('thirty', 30);
+        limitInput('twenty', 20);
+
 
 
 
