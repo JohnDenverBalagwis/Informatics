@@ -49,7 +49,7 @@ if (isset($_POST['submit'])) {
 
         <div class="nav-links">
 
-        <a href="judges.php"><i class="fa-regular fa-user"></i>Judges</a>
+        <a style="background-color: #555;" href="judges.php"><i class="fa-regular fa-user"></i>Judges</a>
 
             <div class="dropdown">
                 <a onclick="myFunction()" class="dropbtn"><i class="fa-regular fa-user"></i>Candidates <i class="fa-solid fa-angle-down"></i></a>

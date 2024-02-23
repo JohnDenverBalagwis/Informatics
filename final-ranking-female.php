@@ -8,42 +8,15 @@ function calculateAverage($id) {
 
 
     $total = 0;
-    $dividedBy = 0;
 
-    $production_number = $admin->select('male_production_number', '*', ['male_candidate_id'=>$id]);
-    $casual_wear = $admin->select('male_casual_wear', '*', ['male_candidate_id'=>$id]);
-    $sports_wear = $admin->select('male_sports_wear', '*', ['male_candidate_id'=>$id]);
-    $formal_attire = $admin->select('male_formal_attire', '*', ['male_candidate_id'=>$id]);
+    $qa_female = $admin->select('qa_female', '*', ['female_candidate_id'=>$id]);
 
-    while ($row = mysqli_fetch_assoc($production_number)) {
-        $total += ($row['fitness'] + $row["poise_and_bearing"] + $row['uniqueness_and_style']);
-
-        $dividedBy++;
-    }
-
-    while ($row = mysqli_fetch_assoc($casual_wear   )) {
-        $total += ($row['poise_and_bearing'] + $row["fitness"] + $row['stage_deportment']);
-
-        $dividedBy++;
-    }
-
-    while ($row = mysqli_fetch_assoc($sports_wear)) {
-        $total += ($row['poise_and_bearing'] + $row['stage_deportment'] + $row['fitness']);
-
-        $dividedBy++;
-    }
-
-    while ($row = mysqli_fetch_assoc($formal_attire)) {
-        $total += ($row['poise_and_bearing'] + $row['stage_presence'] + $row['fitness_and_style'] + $row['elegance']);
-
-        $dividedBy++;
-    }
-
-    if ($dividedBy != 0) {
-        return number_format($total / $dividedBy, 2);
+    while ($row = mysqli_fetch_assoc($qa_female)) {
+        $total = ($row['spontaneity'] + $row["substance"] + $row['delivery']);
     }
 
 
+    return number_format($total / 3, 2);
 }
 
 
@@ -70,10 +43,10 @@ function calculateAverage($id) {
             border-radius: 15px;
         }
 
+        
         .qa-nav:hover {
             background-color: rgb(0,90,215) !important;
         }
-
 
     </style>
 
@@ -130,34 +103,40 @@ function calculateAverage($id) {
     </div>
 
     <div id="main">
-        <div id="title">ranking of male candidates</div>
+        <div id="title">Q/A ranking female</div>
 
         <nav class="d-flex justify-content-center mb-3">
-            <a style="border-right: 1px solid black;" class="qa-nav text-bg-primary py-1 px-2 rounded-1" href="ranking-male.php">Elimination</a>
-            <a class="qa-nav text-bg-primary py-1 px-2 rounded-1 text-decoration-none" href="final-ranking-male.php">QA</a>
+            <a style="border-right: 1px solid black;" class="qa-nav text-bg-primary py-1 px-2 rounded-1 text-decoration-none" href="ranking-female.php">Elimination</a>
+            <a class="qa-nav text-bg-primary py-1 px-2 rounded-1" href="final-ranking-female.php">QA</a>
         </nav>
 
         <div class="box d-flex align-items-center pt-3">
 
+            <nav>
+                <a href="ranking-female.php"></a>
+                <a href="ranking-qa"></a>
+            </nav>
+
             <?php
-                // $candidates = $admin->select('male_candidates', '*');
+                // $candidates = $admin->select('female_candidates', '*');
 
-                $candidates = $admin->mysqli->query("SELECT * FROM male_candidates ORDER BY score DESC");
-
+                $candidates = $admin->mysqli->query("SELECT * FROM female_candidates WHERE winner = 'qualified' ORDER BY final_score DESC ");
 
                 while ($row = mysqli_fetch_assoc($candidates)) {
 
                 $percentage = calculateAverage($row['id']);
 
-                $admin->updateData('male_candidates', ['score'=>$percentage], ['id'=>$row['id']]);
+                $admin->updateData('female_candidates', ['final_score'=>$percentage], ['id'=>$row['id']]);
 
+                
             ?>
+
 
             <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 0; width: 650px;">
                 <img style="width: 7rem; height: 7rem; border-radius: 50%;" src="uploads/<?php echo $row['image']; ?>" alt="">
                 <h5 style="position: relative; top: 1px;"><?php echo $row['name']; ?></h5>
                 <div class="progress my-4" role="progressbar" aria-label="Animated striped example" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="max-width: 300px">
-                    <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: <?php echo $percentage; ?>%"> <?php echo $percentage; ?>%</div>
+                    <div class="progress-bar progress-bar-striped progress-bar-animated text-bg-danger" style="width: <?php echo $percentage; ?>%"> <?php echo $percentage; ?>%</div>
                 </div>
             </div>
             

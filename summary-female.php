@@ -6,8 +6,26 @@
 
     $result_table = array();
 
+    
+    if (isset($_POST['submit'])) {
+        $winner_candidates = $admin->mysqli->query("SELECT * FROM male_candidates ORDER BY score DESC limit 5");
+
+        while ($row = mysqli_fetch_assoc($winner_candidates)) {
+            $admin->updateData('male_candidates', ['winner'=>'qualified'], ['id'=>$row['id']]);
+        }
+
+        $winner_candidates_female = $admin->mysqli->query("SELECT * FROM female_candidates ORDER BY score DESC limit 5");
+
+        while ($row = mysqli_fetch_assoc($winner_candidates_female)) {
+            $admin->updateData('female_candidates', ['winner'=>'qualified'], ['id'=>$row['id']]);
+        }
+
+        header("location: final-ranking-female.php");
+    }
 
 
+
+    
 ?>
 
 
@@ -22,6 +40,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="script.js" defer></script>
+    <style>
+                
+    .qa-nav:hover {
+        background-color: rgb(0,90,215) !important;
+    }
+    </style>
 
     <title>List of Candidates</title>
 
@@ -76,9 +100,13 @@
     </div>
 
     <div id="main">
-        <div id="title">list of female candidates</div>
+        <div id="title">summary of female candidates</div>
 
 
+        <nav class="d-flex justify-content-center mb-3">
+            <a style="border-right: 1px solid black;" class="qa-nav text-bg-primary py-1 px-2 rounded-1" href="summary-female.php">Elimination</a>
+            <a class="qa-nav text-bg-primary py-1 px-2 rounded-1 text-decoration-none" href="final-summary-female.php">QA</a>
+        </nav>
 
         <div class="box">
 
@@ -90,7 +118,7 @@
                     <tr>
                         <th>contestant</th>
                     <?php
-                        $production_number_result = $admin->mysqli->query("SELECT DISTINCT judge_name FROM female_production_number");
+                        $production_number_result = $admin->mysqli->query("SELECT DISTINCT judge_name FROM female_production_number ORDER BY judge_name DESC");
 
                         while ($row = mysqli_fetch_assoc($production_number_result)) {
                     ?>
@@ -131,7 +159,7 @@
                     <tr>
                         <th>contestant</th>
                     <?php
-                        $casual_wear_result = $admin->mysqli->query("SELECT DISTINCT judge_name FROM female_casual_wear");
+                        $casual_wear_result = $admin->mysqli->query("SELECT DISTINCT judge_name FROM female_casual_wear ORDER BY judge_name DESC");
 
                         while ($row = mysqli_fetch_assoc($casual_wear_result)) {
                     ?>
@@ -174,7 +202,7 @@
                     <tr>
                         <th>contestant</th>
                     <?php
-                        $sports_wear_result = $admin->mysqli->query("SELECT DISTINCT judge_name FROM female_sports_wear");
+                        $sports_wear_result = $admin->mysqli->query("SELECT DISTINCT judge_name FROM female_sports_wear ORDER BY judge_name DESC");
 
                         while ($row = mysqli_fetch_assoc($sports_wear_result)) {
                     ?>
@@ -217,7 +245,7 @@
                     <tr>
                         <th>contestant</th>
                     <?php
-                        $formal_attire_result = $admin->mysqli->query("SELECT DISTINCT judge_name FROM female_formal_attire");
+                        $formal_attire_result = $admin->mysqli->query("SELECT DISTINCT judge_name FROM female_formal_attire ORDER BY judge_name DESC");
 
                         while ($row = mysqli_fetch_assoc($formal_attire_result)) {
                     ?>
@@ -251,6 +279,36 @@
             </table>
 
 
+        </div>
+
+        <!-- Button trigger modal -->
+            <div class="text-center">
+            <button type="button" class="btn btn-success mt-2 mx-auto" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Start QA
+            </button>
+        </div>
+
+
+        <!-- Modal -->
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Warning!</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body mx-auto" style="margin:0; text-align: center;">
+                Are you Sure You want to Start QA?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary"  style="font-size: .7rem; padding: 2px 5px" data-bs-dismiss="modal">Cancel</button>
+                <form method="post" class="text-center">
+                    <input class="btn btn-primary" style="font-size: .7rem; padding: 2px 17px; position: relative; bottom: 1px;" type="submit" name="submit" value="Yes">
+                </form >
+            </div>
+            </div>
+        </div>
         </div>
 
     </div>

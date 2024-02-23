@@ -22,7 +22,7 @@
         </div>
     </nav>
 
-    <h1 class="text-center fw-bold text-white" >Thank You for Voting</h1>
+    <h1 class="text-center fw-bold text-white" >Thank You for Judging</h1>
 </body>
 
 </html>

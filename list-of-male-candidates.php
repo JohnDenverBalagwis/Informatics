@@ -36,10 +36,6 @@ if (isset($_POST['submit'])) {
 }
 
 
-
-
-
-
 ?>
 
 
@@ -76,7 +72,7 @@ if (isset($_POST['submit'])) {
             <a href="judges.php"><i class="fa-regular fa-user"></i>Judges</a>
 
 
-            <div class="dropdown">
+            <div class="dropdown" style="background-color: #555;">
                 <a onclick="myFunction();" class="dropbtn"><i class="fa-regular fa-user"></i>Candidates <i class="fa-solid fa-angle-down"></i></a></a>
                 <div id="myDropdown" class="dropdown-content">
                     <a href="list-of-male-candidates.php">Mr.</a>
@@ -114,6 +110,7 @@ if (isset($_POST['submit'])) {
 
         <div class="box">
           <button id="myBtn" class="add-candidate-button">
+          <i class="fa-solid fa-user-plus fs-6"></i>
             Add
           </button>
 

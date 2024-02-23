@@ -95,7 +95,8 @@ if (isset($_POST['submit'])) {
                 </thead>
                 <tbody>
                     <?php
-                        $candidates = $judges->mysqli->query("SELECT * FROM female_candidates ORDER BY candidate_number ASC");
+
+                        $candidates = $judges->mysqli->query("SELECT * FROM female_candidates WHERE winner = 'qualified' ORDER BY candidate_number ASC ");
 
                         while ($row = mysqli_fetch_assoc($candidates)) {
                     ?>

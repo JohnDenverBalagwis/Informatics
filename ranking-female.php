@@ -70,6 +70,10 @@ function calculateAverage($id) {
             border-radius: 15px;
         }
 
+        
+        .qa-nav:hover {
+            background-color: rgb(0,90,215) !important;
+        }
 
     </style>
 
@@ -102,7 +106,7 @@ function calculateAverage($id) {
                 </div>
             </div>
 
-            <div class="dropdown">
+            <div class="dropdown" style="background-color: #555;">
                 <a onclick="myFunction2();" class="dropbtn"><i class="fa-solid fa-square-poll-vertical"></i>votes/rankings <i class="fa-solid fa-angle-down"></i></a></a>
 
                 <div id="myDropdown2" class="dropdown-content2">
@@ -126,23 +130,35 @@ function calculateAverage($id) {
     </div>
 
     <div id="main">
-        <div id="title">ranking of male candidates</div>
+        <div id="title">ranking of female candidates</div>
+
+        <nav class="d-flex justify-content-center mb-3">
+            <a style="border-right: 1px solid black;" class="qa-nav text-bg-primary py-1 px-2 rounded-1" href="ranking-female.php">Elimination</a>
+            <a class="qa-nav text-bg-primary py-1 px-2 rounded-1 text-decoration-none" href="final-ranking-female.php">QA</a>
+        </nav>
 
         <div class="box d-flex align-items-center pt-3">
 
+
             <?php
-                $candidates = $admin->select('female_candidates', '*');
+                // $candidates = $admin->select('female_candidates', '*');
+
+                $candidates = $admin->mysqli->query("SELECT * FROM female_candidates ORDER BY score DESC");
 
                 while ($row = mysqli_fetch_assoc($candidates)) {
 
                 $percentage = calculateAverage($row['id']);
+
+                $admin->updateData('female_candidates', ['score'=>$percentage], ['id'=>$row['id']]);
+
                 
             ?>
 
-            <div style="display: flex; align-items: center; justify-content: space-between; gap: 15px; width: 40rem;">
+            <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 0; width: 650px;">
+                <img style="width: 7rem; height: 7rem; border-radius: 50%;" src="uploads/<?php echo $row['image']; ?>" alt="">
                 <h5 style="position: relative; top: 1px;"><?php echo $row['name']; ?></h5>
-                <div class="progress my-4" role="progressbar" aria-label="Animated striped example" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">
-                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" style="width: <?php echo $percentage; ?>%"> <?php echo $percentage; ?>%</div>
+                <div class="progress my-4" role="progressbar" aria-label="Animated striped example" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="max-width: 300px">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated text-bg-danger" style="width: <?php echo $percentage; ?>%"> <?php echo $percentage; ?>%</div>
                 </div>
             </div>
             

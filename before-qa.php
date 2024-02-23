@@ -1,3 +1,10 @@
+<?php
+include "classes/database.php";
+
+$judges = new database();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,7 +30,12 @@
     </nav>
 
     <h1 class="text-white fw-bold text-center" style="margin-top: 20vh;"> Judge for the Question and Answer</h1>
+
+    <?php
+        if ($judges->isExisted('male_candidates', ['winner'=>'qualified'])) {
+    ?>
     <a class="btn btn-primary mx-auto mt-4 fs-4" href="qa-female.php">Get Started</a>
+    <?php } ?>
 
 </body>
 
