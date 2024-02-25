@@ -69,66 +69,22 @@ body {
   background-color: none;
 }
 
-/* slider  */
-
 .slider-container {
   position: relative;
-  width: 300px;
-  /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); */
-
-}
-
-.candidate-number {
-  color: white;
-  text-align: center;
-}
-
-.candidate-name {
-  color: white;
-  text-align: center;
 }
 
 .slider {
-  display: flex;
+  width: 500px;
   overflow: hidden;
-  
 }
 
-.slider div {
-  width: 300px;
-  border-radius: 12px;
+.slides {
+  display: flex;
   transition: transform 0.5s ease;
 }
 
-img {
-  width: 300px;
-}
-
-.prev, .next {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: #333;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-}
-
-.prev {
-  left: 10px;
-  border-radius: 9px;
-  background-color: rgba(255, 255, 255, 0.131);
-  color: black;
-  border: 1px solid rgba(255, 255, 255, 0.159);
-}
-
-.next {
-  right: 10px;
-  border-radius: 9px;
-  background-color: rgba(255, 255, 255, 0.156);
-  color: black;
-  border: 1px solid rgba(255, 255, 255, 0.197);
+.slides div {
+  width: 100%;
 }
 
 

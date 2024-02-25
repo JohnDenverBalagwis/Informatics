@@ -54,21 +54,19 @@ if (isset($_POST['submit'])) {
     <div class="main-container">
         <div class="main-content">
             <div class="slider-container">
-                <div class="slider">
-                    <?php
-
-                        while ($row = mysqli_fetch_assoc($candidates)) {
-                    ?>
-                    <div>
-                        <h1 class="candidate-number"><?php echo $row['candidate_number'] ?></h1>
-                        <img src="uploads/<?php echo $row['image']; ?>" alt="Image 1">
-                        <h3 class="candidate-name"><?php echo $row['name']; ?></h3>
+            <div class="slider">
+                    <div class="slides">
+                        <?php
+                            while ($row = mysqli_fetch_assoc($candidates)) {
+                        ?>
+                            <div>
+                                <h1 class="text-center text-white"><?php echo $row['candidate_number'] ?></h1>
+                                <img style="width: 500px" src="uploads/<?php echo $row['image']; ?>"> 
+                                <h3 class="text-center text-white"><?php echo $row['name']; ?></h3>
+                            </div>
+                        <?php } ?>
                     </div>
-                    <?php } ?>
-
                 </div>
-                <button class="prev" onclick="prevSlide()">Prev</button>
-                <button class="next" onclick="nextSlide()">Next</button>
             </div>
         </div>
 
@@ -92,13 +90,15 @@ if (isset($_POST['submit'])) {
                         </th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="myTable">
                     <?php
                         $candidates = $judges->mysqli->query("SELECT * FROM female_candidates ORDER BY candidate_number ASC");
+                        $i = 0;
 
                         while ($row = mysqli_fetch_assoc($candidates)) {
+                        $i++;
                     ?>
-                    <tr>
+                    <tr data-index="<?php echo $i; ?>">
                         <td>
                             <h5 class="fw-bold"><?php echo $row['candidate_number']; ?></h5>
                         </td>
@@ -188,6 +188,14 @@ if (isset($_POST['submit'])) {
         limitInput('forty', 40);
         limitInput('thirty', 30);
 
+        document.querySelectorAll('#myTable tr').forEach(row => {
+        row.addEventListener('click', function() {
+            const index = parseInt(this.dataset.index);
+            const slideWidth = document.querySelector('.slider').offsetWidth;
+            const slides = document.querySelector('.slides');
+            slides.style.transform = `translateX(-${(index - 1) * slideWidth}px)`;
+        });
+        });
 
 
 

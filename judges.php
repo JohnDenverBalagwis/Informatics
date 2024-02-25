@@ -126,7 +126,7 @@ if (isset($_POST['submit'])) {
                             </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-secondary"  style="font-size: .7rem; padding: 2px 5px" data-bs-dismiss="modal">Cancel</button>
-                              <a class="btn btn-danger" style="font-size: .7rem; padding: 2px 5px" href="delete-candidate.php?id=<?php echo $row['id']; ?>">Delete</a>
+                              <a class="btn btn-danger" style="font-size: .7rem; padding: 2px 5px" href="delete-judge.php?id=<?php echo $row['id']; ?>">Delete</a>
                             </div>
                           </div>
                         </div>
