@@ -1,57 +1,72 @@
 <?php
-    include "classes/database.php";
+include "classes/database.php";
 
-    $admin = new database();
+$admin = new database();
 
-    $id = $_GET['id'];
+$id = $_GET['id'];
 
-    if ($_GET['sex'] == 'male') {
-        $candidate = $admin->select('male_candidates', '*', ['id'=>$id]);
-    } else if ($_GET['sex'] == "female") {
-        $candidate = $admin->select('female_candidates', '*', ['id'=>$id]);
-    }
+$wrong_file = false;
 
-    $candidate_number;
-    $name;
-    $age;
-    $course;
-    $image;
+if ($_GET['sex'] == 'male') {
+    $candidate = $admin->select('male_candidates', '*', ['id'=>$id]);
+} else if ($_GET['sex'] == "female") {
+    $candidate = $admin->select('female_candidates', '*', ['id'=>$id]);
+}
 
-    while ($row = mysqli_fetch_assoc($candidate)) {
-        $candidate_number = $row['candidate_number'];
-        $name = $row['name'];
-        $age = $row['age'];
-        $course = $row['course'];
-        $image = $row['image'];
-    }
+$candidate_number;
+$name;
+$age;
+$course;
+$image;
 
-    if (isset($_POST['submit'])) {
-        $candidate_number = $_POST['candidate-number'];
-        $name = mysqli_escape_string($admin->mysqli, $_POST['name']);
-        $age = mysqli_escape_string($admin->mysqli, $_POST['age']);
-        $course = mysqli_escape_string($admin->mysqli, $_POST['course']);
+while ($row = mysqli_fetch_assoc($candidate)) {
+    $candidate_number = $row['candidate_number'];
+    $name = $row['name'];
+    $age = $row['age'];
+    $course = $row['course'];
+    $image = $row['image'];
+}
 
-        if ($admin->checkIfImage('candidate-image') || $_FILES['candidate-image']['size'] == 0) {
-            if ($_GET['sex'] == 'male') {
-                $candidate = $admin->updateData('male_candidates', ['candidate_number'=>$candidate_number, 'name'=>$name, 'age'=>$age, 'course'=>$course], ['id'=>$id]);
+if (isset($_POST['submit'])) {
+    $candidate_number = $_POST['candidate-number'];
+    $name = mysqli_escape_string($admin->mysqli, $_POST['name']);
+    $age = mysqli_escape_string($admin->mysqli, $_POST['age']);
+    $course = mysqli_escape_string($admin->mysqli, $_POST['course']);
 
-                if ($_FILES['candidate-image']['size'] == 1) {
-                    $admin->updateImage('candidate-image', 'male_candidates', 'image', 'uploads/');
-                }
+    if (empty($_FILES['candidate-image']['name'])) {
 
-                header("location: list-of-male-candidates.php?edit");
-            } else if ($_GET['sex'] == "female") {
-                $candidate = $admin->updateData('female_candidates', ['candidate_number'=>$candidate_number, 'name'=>$name, 'age'=>$age, 'course'=>$course], ['id'=>$id]);
+        if ($_GET['sex'] == 'male') {
+            $candidate = $admin->updateData('male_candidates', ['candidate_number'=>$candidate_number, 'name'=>$name, 'age'=>$age, 'course'=>$course], ['id'=>$id]);
 
-                if ($_FILES['candidate-image']['size'] == 1) {
-                    $admin->updateImage('candidate-image', 'female_candidates', 'image', 'uploads/');
-                }
-                header("location: list-of-female-candidates.php?edit");
+            header("location: list-of-male-candidates.php?edit");
+        } else if ($_GET['sex'] == "female") {
+            $candidate = $admin->updateData('female_candidates', ['candidate_number'=>$candidate_number, 'name'=>$name, 'age'=>$age, 'course'=>$course], ['id'=>$id]);
 
-            }
+            header("location: list-of-female-candidates.php?edit");
+
         }
+    } else if (!$admin->checkIfImage('candidate-image')) {
+        $wrong_file = true;
+    } else {
+        if ($_GET['sex'] == 'male') {
+            $candidate = $admin->updateData('male_candidates', ['candidate_number'=>$candidate_number, 'name'=>$name, 'age'=>$age, 'course'=>$course], ['id'=>$id]);
 
-    }   
+            $admin->updateImage('candidate-image', 'male_candidates', 'image', 'uploads/');
+
+
+            header("location: list-of-male-candidates.php?edit");
+        } else if ($_GET['sex'] == "female") {
+            $candidate = $admin->updateData('female_candidates', ['candidate_number'=>$candidate_number, 'name'=>$name, 'age'=>$age, 'course'=>$course], ['id'=>$id]);
+
+
+            $admin->updateImage('candidate-image', 'female_candidates', 'image', 'uploads/');
+            
+            header("location: list-of-female-candidates.php?edit");
+
+        }
+    }
+
+}   
 
     
 ?>
@@ -71,6 +86,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <title>List of Candidates</title>
+    <script src="script.js" defer></script>
+
 
 </head>
 
@@ -87,24 +104,35 @@
         </div>
 
         <div class="nav-links">
-            <div class="dropdown">
-                <a onclick="myFunction()" class="dropbtn"><i class="fa-regular fa-user"></i>Candidates <i class="fa-solid fa-angle-down"></i></a></a>
+
+            <a href="judges.php"><i class="fa-regular fa-user"></i>Judges</a>
+
+            <div class="dropdown" style="background-color: #555;">
+                <a onclick="myFunction()" class="dropbtn"><i class="fa-regular fa-user"></i>Candidates <i class="fa-solid fa-angle-down"></i></a>
                 <div id="myDropdown" class="dropdown-content">
-                    <a href="#">Mr.</a>
-                    <a href="#">Ms.</a>
+                    <a href="list-of-male-candidates.php">Mr.</a>
+                    <a href="list-of-female-candidates.php">Ms.</a>
                 </div>
             </div>
 
             <div class="dropdown">
-                <a onclick="myFunction2()" class="dropbtn"><i class="fa-solid fa-square-poll-vertical"></i>votes/rankings <i class="fa-solid fa-angle-down"></i></a></a>
+                <a onclick="myFunction2()" class="dropbtn"><i class="fa-solid fa-square-poll-vertical"></i>votes/rankings <i class="fa-solid fa-angle-down"></i></a>
 
                 <div id="myDropdown2" class="dropdown-content2">
-                    <a href="/ranking-male.php">Mr.</a>
+                    <a href="ranking-male.php">Mr.</a>
                     <a href="ranking-female.php">Ms.</a>
                 </div>
             </div>
 
-            <a href="#"> <i class="fa-solid fa-square-poll-vertical"></i> summary</a>
+            <div class="dropdown">
+                <a onclick="myFunction3()" class="dropbtn"><i class="fa-solid fa-square-poll-vertical"></i>Summary <i class="fa-solid fa-angle-down"></i></a>
+
+                <div id="myDropdown3" class="dropdown-content3">
+                    <a href="summary-male.php">Mr.</a>
+                    <a href="summary-female.php">Ms.</a>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -185,16 +213,29 @@
         </div>
     </div>
 
-
-    <div id="errorPopup" class="popup">
-      <div class="popup-content">
-        <span class="close" onclick="hideError()">&times;</span>
-        <p id="errorMessage">Error Message Here</p>
-      </div>
+    <div id="popup">
+      <p id="popupMessage"></p>
     </div>
 
-    <?php
+    <script>
+      function showPopup(message) {
+      var popup = document.getElementById("popup");
+      document.getElementById('popupMessage').innerHTML = message;
+      popup.style.display = "block"; // Show the popup
 
+      // Automatically close the popup after 2 seconds
+      setTimeout(function() {
+          popup.style.display = "none"; // Hide the popup
+      }, 1500);
+    }
+
+    </script>
+
+
+    <?php
+        if ($wrong_file) {
+            echo "<script>showPopup('upload only jpg, jpeg and png files');</script>";
+        }
     ?>
 
 </body>
