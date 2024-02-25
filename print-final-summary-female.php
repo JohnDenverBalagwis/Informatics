@@ -52,65 +52,10 @@
 </head>
 
 <body>
-    <div id="sidebar">
-        <div class="upper-logo">
-            <figure class="logo">
-                <img src="images/infor.png" alt="logo">
-            </figure>
-            <div class="name">
-                <div class="informatics">Informatics</div>
-                <div class="college">COLLEGE</div>
-            </div>
-        </div>
 
-        <div class="nav-links">
-
-            <a href="judges.php"><i class="fa-regular fa-user"></i>Judges</a>
-
-
-            <div class="dropdown">
-                <a onclick="myFunction();" class="dropbtn"><i class="fa-regular fa-user"></i>Candidates <i class="fa-solid fa-angle-down"></i></a></a>
-                <div id="myDropdown" class="dropdown-content">
-                    <a href="list-of-male-candidates.php">Mr.</a>
-                    <a href="list-of-female-candidates.php">Ms.</a>
-                </div>
-            </div>
-
-            <div class="dropdown">
-                <a onclick="myFunction2();" class="dropbtn"><i class="fa-solid fa-square-poll-vertical"></i>votes/rankings <i class="fa-solid fa-angle-down"></i></a></a>
-
-                <div id="myDropdown2" class="dropdown-content2">
-                    <a href="ranking-male.php">Mr.</a>
-                    <a href="ranking-female.php">Ms.</a>
-                </div>
-            </div>
-
-
-            <div class="dropdown" style="background-color: #555;">
-              
-                <a onclick="myFunction3();" class="dropbtn"><i class="fa-solid fa-square-poll-vertical"></i>Summary <i class="fa-solid fa-angle-down"></i></a></a>
-
-                <div id="myDropdown3" class="dropdown-content3">
-                  <a href="summary-male.php">Mr.</a>
-                  <a href="summary-female.php">Ms.</a>
-                </div>
-            </div>
-
-        </div>
-    </div>
 
     <div id="main">
         <div id="title">final summary of female candidates</div>
-
-
-        <nav class="d-flex justify-content-center mb-3">
-            <a style="border-right: 1px solid black;" class="qa-nav text-bg-primary py-1 px-2 rounded-1 text-decoration-none" href="summary-female.php">Elimination</a>
-            <a class="qa-nav text-bg-primary py-1 px-2 rounded-1" href="final-summary-female.php">QA</a>
-        </nav>
-
-        <div class="text-end pe-1">
-            <a class="btn btn-secondary mb-2" href="print-final-summary-female.php" target="_blank">Print</a>
-        </div>
 
         <div class="box">
 
@@ -162,7 +107,9 @@
 
     </div>
 
-
+    <script>
+        window.print();
+    </script>
 </body>
 
 </html>

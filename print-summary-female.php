@@ -41,6 +41,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="script.js" defer></script>
     <style>
+
+        * {
+            font-size: .8rem;
+        }
                 
     .qa-nav:hover {
         background-color: rgb(0,90,215) !important;
@@ -52,65 +56,11 @@
 </head>
 
 <body>
-    <div id="sidebar">
-        <div class="upper-logo">
-            <figure class="logo">
-                <img src="images/infor.png" alt="logo">
-            </figure>
-            <div class="name">
-                <div class="informatics">Informatics</div>
-                <div class="college">COLLEGE</div>
-            </div>
-        </div>
 
-        <div class="nav-links">
-
-            <a href="judges.php"><i class="fa-regular fa-user"></i>Judges</a>
-
-
-            <div class="dropdown">
-                <a onclick="myFunction();" class="dropbtn"><i class="fa-regular fa-user"></i>Candidates <i class="fa-solid fa-angle-down"></i></a></a>
-                <div id="myDropdown" class="dropdown-content">
-                    <a href="list-of-male-candidates.php">Mr.</a>
-                    <a href="list-of-female-candidates.php">Ms.</a>
-                </div>
-            </div>
-
-            <div class="dropdown">
-                <a onclick="myFunction2();" class="dropbtn"><i class="fa-solid fa-square-poll-vertical"></i>votes/rankings <i class="fa-solid fa-angle-down"></i></a></a>
-
-                <div id="myDropdown2" class="dropdown-content2">
-                    <a href="ranking-male.php">Mr.</a>
-                    <a href="ranking-female.php">Ms.</a>
-                </div>
-            </div>
-
-
-            <div class="dropdown">
-              
-                <a onclick="myFunction3();" class="dropbtn"><i class="fa-solid fa-square-poll-vertical"></i>Summary <i class="fa-solid fa-angle-down"></i></a></a>
-
-                <div id="myDropdown3" class="dropdown-content3">
-                  <a href="summary-male.php">Mr.</a>
-                  <a href="summary-female.php">Ms.</a>
-                </div>
-            </div>
-
-        </div>
-    </div>
 
     <div id="main">
         <div id="title">summary of female candidates</div>
 
-
-        <nav class="d-flex justify-content-center mb-3">
-            <a style="border-right: 1px solid black;" class="qa-nav text-bg-primary py-1 px-2 rounded-1" href="summary-female.php">Elimination</a>
-            <a class="qa-nav text-bg-primary py-1 px-2 rounded-1 text-decoration-none" href="final-summary-female.php">QA</a>
-        </nav>
-
-        <div class="text-end pe-1">
-            <a class="btn btn-secondary mb-2" href="print-summary-female.php" target="_blank">Print</a>
-        </div>
 
         <div class="box">
 
@@ -285,39 +235,9 @@
 
         </div>
 
-        <!-- Button trigger modal -->
-            <div class="text-center">
-            <button type="button" class="btn btn-success mt-2 mx-auto" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    Start QA
-            </button>
-        </div>
-
-
-        <!-- Modal -->
-
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Warning!</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body mx-auto" style="margin:0; text-align: center;">
-                Are you Sure You want to Start QA?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary"  style="font-size: .7rem; padding: 2px 5px" data-bs-dismiss="modal">Cancel</button>
-                <form method="post" class="text-center">
-                    <input class="btn btn-primary" style="font-size: .7rem; padding: 2px 17px; position: relative; bottom: 1px;" type="submit" name="submit" value="Yes">
-                </form >
-            </div>
-            </div>
-        </div>
-        </div>
-
-    </div>
-
-
+        <script>
+        window.print();
+    </script>
 </body>
 
 </html>

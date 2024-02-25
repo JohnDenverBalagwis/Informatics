@@ -107,6 +107,10 @@
             <a class="qa-nav text-bg-primary py-1 px-2 rounded-1 text-decoration-none" href="final-summary-male.php">QA</a>
         </nav>
 
+        <div class="text-end pe-1">
+            <a class="btn btn-secondary mb-2" href="print-summary-male.php" target="_blank">Print</a>
+        </div>
+
 
         <div class="box">
 
