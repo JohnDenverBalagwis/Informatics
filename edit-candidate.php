@@ -3,9 +3,16 @@ include "classes/database.php";
 
 $admin = new database();
 
+function containsOnlyLetters($str) {
+    $pattern = '/^[a-zA-Z]+$/';
+    return preg_match($pattern, $str);
+  }
+
 $id = $_GET['id'];
 
 $wrong_file = false;
+$invalidCandidateName = false;
+$invalidCourse = false;
 
 if ($_GET['sex'] == 'male') {
     $candidate = $admin->select('male_candidates', '*', ['id'=>$id]);
@@ -33,7 +40,11 @@ if (isset($_POST['submit'])) {
     $age = mysqli_escape_string($admin->mysqli, $_POST['age']);
     $course = mysqli_escape_string($admin->mysqli, $_POST['course']);
 
-    if (empty($_FILES['candidate-image']['name'])) {
+    if (!containsOnlyLetters($name)) {
+        $invalidCandidateName = true;
+    } else   if (!containsOnlyLetters($course)) {
+        $invalidCourse = true;
+      } else if (empty($_FILES['candidate-image']['name'])) {
 
         if ($_GET['sex'] == 'male') {
             $candidate = $admin->updateData('male_candidates', ['candidate_number'=>$candidate_number, 'name'=>$name, 'age'=>$age, 'course'=>$course], ['id'=>$id]);
@@ -105,7 +116,6 @@ if (isset($_POST['submit'])) {
 
         <div class="nav-links">
 
-            <a href="judges.php"><i class="fa-regular fa-user"></i>Judges</a>
 
             <div class="dropdown" style="background-color: #555;">
                 <a onclick="myFunction()" class="dropbtn"><i class="fa-regular fa-user"></i>Candidates <i class="fa-solid fa-angle-down"></i></a>
@@ -235,7 +245,11 @@ if (isset($_POST['submit'])) {
     <?php
         if ($wrong_file) {
             echo "<script>showPopup('upload only jpg, jpeg and png files');</script>";
-        }
+        } else if ($invalidCandidateName) {
+            echo "<script>showPopup('Candidate Name Should Only Have Letters');</script>";
+        }  else if ($invalidCourse) {
+        echo "<script>showPopup('Course name should only have letters');</script>";
+        } 
     ?>
 
 </body>

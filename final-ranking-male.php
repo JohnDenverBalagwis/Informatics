@@ -68,7 +68,6 @@ function calculateAverage($id) {
 
         <div class="nav-links">
 
-            <a href="judges.php"><i class="fa-regular fa-user"></i>Judges</a>
 
 
             <div class="dropdown">

@@ -5,12 +5,19 @@ $admin = new database();
 
 session_start();
 
+function containsOnlyLetters($str) {
+  $pattern = '/^[a-zA-Z]+$/';
+  return preg_match($pattern, $str);
+}
+
 
 $candidateNumber = $admin->select('male_candidates', '*')->num_rows + 1;
 
 $candidateExist = false;
 $candidateAdded = false;
 $wrong_file = false;
+$invalidCandidateName = false;
+$invalidCourse = false;
 
 if (isset($_POST['submit'])) {
   $candidate_number = $_POST['candidate-number'];
@@ -18,7 +25,11 @@ if (isset($_POST['submit'])) {
   $age = mysqli_escape_string($admin->mysqli, $_POST['age']);
   $course = mysqli_escape_string($admin->mysqli, $_POST['course']);
 
-  if ($admin->isExisted('male_candidates', ['name'=>$name])) {
+  if (!containsOnlyLetters($name)) {
+    $invalidCandidateName = true;
+  } else if (!containsOnlyLetters($course)) {
+    $invalidCourse = true;
+  } else if ($admin->isExisted('male_candidates', ['name'=>$name])) {
     $candidateExist = true;
   } else if ($admin->checkIfImage('candidate-image')) {
     
@@ -69,7 +80,6 @@ if (isset($_POST['submit'])) {
 
         <div class="nav-links">
 
-            <a href="judges.php"><i class="fa-regular fa-user"></i>Judges</a>
 
 
             <div class="dropdown" style="background-color: #555;">
@@ -268,7 +278,11 @@ if (isset($_POST['submit'])) {
         echo "<script>showPopup('upload only jpg, jpeg and png files');</script>";
       } else if (isset($_GET['deleted'])) {
         echo "<script>showPopup('candidate deleted successfully');</script>";
-      }
+      } else if ($invalidCandidateName) {
+        echo "<script>showPopup('Candidate Name Should Only Have Letters');</script>";
+      } else if ($invalidCourse) {
+        echo "<script>showPopup('Course name should only have letters');</script>";
+      } 
     ?>
 
 </body>
