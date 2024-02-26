@@ -11,8 +11,9 @@ $judges = new database();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>List of Candidates</title>
     <link rel="stylesheet" href="css/candidate-pictures.css?<?php echo time(); ?>">
+    <link rel="shortcut icon" href="images/infor.png" type="image/x-icon">
 </head>
 
 <body>
