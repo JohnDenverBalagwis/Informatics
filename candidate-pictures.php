@@ -1,7 +1,14 @@
 <?php
 include "classes/database.php";
 
+session_start();
+
+if (!isset($_COOKIE['name'])) {
+    header('location: index.php');
+}
+
 $judges = new database();
+
 ?>
 
 
@@ -42,7 +49,7 @@ $judges = new database();
                             <img src="uploads/<?php echo $row['image']; ?>" alt="candidate">
                         </div>
                         <div class="candidate-details">
-                            <div class="candidate-name"><?php echo $row['name']; ?></div>
+                            <p class="candidate-name"><?php echo $row['name']; ?></p>
                             <div class="candidate-position"><?php echo $row['candidate_number']; ?></div>
                         </div>
                     </div>
@@ -62,7 +69,7 @@ $judges = new database();
                             <img src="uploads/<?php echo $row['image']; ?>" alt="candidate">
                         </div>
                         <div class="candidate-details">
-                            <div class="candidate-name"><?php echo $row['name']; ?></div>
+                            <p class="candidate-name"><?php echo $row['name']; ?></p>
                             <div class="candidate-position"><?php echo $row['candidate_number']; ?></div>
                         </div>
                     </div>

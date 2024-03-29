@@ -6,6 +6,11 @@
 
     $result_table = array();
 
+    $male_production_number = 0;
+    $male_casual_wear = 0;
+    $male_sports_wear = 0;
+    $male_formal_attire = 0;
+
 
     
     if (isset($_POST['submit'])) {
@@ -46,6 +51,7 @@
         .qa-nav:hover {
             background-color: rgb(0,90,215) !important;
         }
+
     </style>
     <title>List of Summary Male</title>
 
@@ -122,19 +128,27 @@
                     <?php
                         $production_number_result = $admin->mysqli->query("SELECT DISTINCT judge_name FROM male_production_number ORDER BY judge_name DESC");
 
-                        while ($row = mysqli_fetch_assoc($production_number_result)) {
+                        while ($row = mysqli_fetch_assoc($production_number_result)) {   
                     ?>
+
                         <th><?php echo $row['judge_name'] ;?></th>
+
                     <?php } ?>
+
+                        <th>Average</th>
 
                     </tr>
                 </thead>
                 <tbody>
-                    <tbody>
+                    <tbody id="male_production_number">
                         <?php
                             $production_number_result = $admin->mysqli->query("SELECT DISTINCT male_candidate_id FROM male_production_number ORDER BY judge_name DESC, male_candidate_id DESC");
 
+                            $times2 = 0;
+                            $highest_score = 0;
                             while ($row = mysqli_fetch_assoc($production_number_result)) {
+                            $sum = 0;
+                            $times = 0;
                         ?>
                             <tr>
                                 <td><?php echo $admin->getName('male_candidates', $row['male_candidate_id'], "name"); ?></td>
@@ -143,10 +157,30 @@
                                     $judges_score = $admin->mysqli->query("SELECT * FROM male_production_number WHERE male_candidate_id = $row[male_candidate_id] ORDER BY judge_name DESC");
 
                                     while ($row2 = mysqli_fetch_assoc($judges_score)) {
+                                    $sum += average($row2['poise_and_bearing'], $row2['fitness'], $row2['uniqueness_and_style']);
+                                    $times++;
                                 ?>
-                                <td><?php echo average($row2['poise_and_bearing'], $row2['fitness'], $row2['uniqueness_and_style']); ?></td>
+                                <td>
+                                    <a class="text-decoration-none text-dark edit-score" href="edit-candidate-score.php?id=<?php echo $row2['id']; ?>&category=male_production_number&sex=male">    
+                                        <?php echo average($row2['poise_and_bearing'], $row2['fitness'], $row2['uniqueness_and_style']); ?>
+                                    </a>
+                                </td>
 
-                                <?php } ?>
+
+                                <?php }
+                                
+                                $times2++;
+                                
+                                if ($highest_score < number_format($sum / $times, 2)) {
+                                    $highest_score = number_format($sum / $times, 2);
+                                    $male_production_number = $times2;
+                                }
+                                ?>
+
+                                <td>
+                                    <?php echo number_format($sum / $times, 2);?>
+                                </td>
+
                             </tr>
                         <?php } ?>
                     </tbody>
@@ -168,14 +202,20 @@
                         <th><?php echo $row['judge_name'] ;?></th>
                     <?php } ?>
 
+                    <th>Average</th>
+
                     </tr>
                 </thead>
                 <tbody>
-                    <tbody>
+                    <tbody id="male_casual_wear">
                         <?php
                             $casual_wear_result = $admin->mysqli->query("SELECT DISTINCT male_candidate_id FROM male_casual_wear ORDER BY judge_name DESC, male_candidate_id DESC");
 
+                            $times2 = 0;
+                            $highest_score = 0;
                             while ($row = mysqli_fetch_assoc($casual_wear_result)) {
+                            $sum = 0;
+                            $times = 0;
                         ?>
                             <tr>
                                 <td><?php echo $admin->getName('male_candidates', $row['male_candidate_id'], "name"); ?></td>
@@ -184,10 +224,28 @@
                                     $judges_score = $admin->mysqli->query("SELECT * FROM male_casual_wear WHERE male_candidate_id = $row[male_candidate_id] ORDER BY judge_name DESC");
 
                                     while ($row2 = mysqli_fetch_assoc($judges_score)) {
+                                    $sum += average($row2['poise_and_bearing'], $row2['fitness'], $row2['stage_deportment']);
+                                    $times++;
                                 ?>
-                                <td><?php echo average($row2['poise_and_bearing'], $row2['fitness'], $row2['stage_deportment']); ?></td>
+                                <td>
+                                    <a class="text-decoration-none text-dark edit-score" href="edit-candidate-score.php?id=<?php echo $row2['id']; ?>&category=male_casual_wear&sex=male">  
+                                        <?php echo average($row2['poise_and_bearing'], $row2['fitness'], $row2['stage_deportment']); ?>
+                                    </a>
+                                </td>
 
-                                <?php } ?>
+                                <?php }
+                                
+                                $times2++;
+                                
+                                if ($highest_score < number_format($sum / $times, 2)) {
+                                    $highest_score = number_format($sum / $times, 2);
+                                    $male_casual_wear = $times2;
+                                }?>
+
+                                <td>
+                                    <?php echo number_format($sum / $times, 2);?>
+                                </td>
+
                             </tr>
                         <?php } ?>
                     </tbody>
@@ -211,14 +269,20 @@
                         <th><?php echo $row['judge_name'] ;?></th>
                     <?php } ?>
 
+                    <th>Average</th>
+
                     </tr>
                 </thead>
                 <tbody>
-                    <tbody>
+                    <tbody id="male_sports_wear">
                         <?php
                             $sports_wear_result = $admin->mysqli->query("SELECT DISTINCT male_candidate_id FROM male_sports_wear ORDER BY judge_name DESC, male_candidate_id DESC");
 
+                            $times2 = 0;
+                            $highest_score = 0;
                             while ($row = mysqli_fetch_assoc($sports_wear_result)) {
+                            $sum = 0;
+                            $times = 0;
                         ?>
                             <tr>
                                 <td><?php echo $admin->getName('male_candidates', $row['male_candidate_id'], "name"); ?></td>
@@ -227,10 +291,28 @@
                                     $judges_score = $admin->mysqli->query("SELECT * FROM male_sports_wear WHERE male_candidate_id = $row[male_candidate_id] ORDER BY judge_name DESC");
 
                                     while ($row2 = mysqli_fetch_assoc($judges_score)) {
+                                    $sum += average($row2['poise_and_bearing'], $row2['stage_deportment'], $row2['fitness']);
+                                    $times++;
                                 ?>
-                                <td><?php echo average($row2['poise_and_bearing'], $row2['stage_deportment'], $row2['fitness']); ?></td>
+                                <td>
+                                    <a class="text-decoration-none text-dark edit-score" href="edit-candidate-score.php?id=<?php echo $row2['id']; ?>&category=male_sports_wear&sex=male">  
+                                        <?php echo average($row2['poise_and_bearing'], $row2['stage_deportment'], $row2['fitness']); ?>
+                                    </a>
+                                </td>
 
-                                <?php } ?>
+                                <?php }
+                                $times2++;
+
+                                if ($highest_score < number_format($sum / $times, 2)) {
+                                    $highest_score = number_format($sum / $times, 2);
+                                    $male_sports_wear = $times2;
+                                }
+                                ?>
+
+                                <td>
+                                    <?php echo number_format($sum / $times, 2);?>
+                                </td>
+
                             </tr>
                         <?php } ?>
                     </tbody>
@@ -247,21 +329,27 @@
                     <tr>
                         <th>contestant</th>
                     <?php
-                        $formal_attire_result = $admin->mysqli->query("SELECT DISTINCT judge_name FROM male_formal_attire ORDER BY judge_name DESC");
+                        $formal_attire = $admin->mysqli->query("SELECT DISTINCT judge_name FROM male_formal_attire ORDER BY judge_name DESC");
 
-                        while ($row = mysqli_fetch_assoc($formal_attire_result)) {
+                        while ($row = mysqli_fetch_assoc($formal_attire)) {
                     ?>
                         <th><?php echo $row['judge_name'] ;?></th>
                     <?php } ?>
 
+                    <th>Average</th>
+
                     </tr>
                 </thead>
                 <tbody>
-                    <tbody>
+                    <tbody id="male_formal_attire">
                         <?php
                             $formal_attire_result = $admin->mysqli->query("SELECT DISTINCT male_candidate_id FROM male_formal_attire ORDER BY judge_name DESC, male_candidate_id DESC");
 
+                            $times2 = 0;
+                            $highest_score = 0;
                             while ($row = mysqli_fetch_assoc($formal_attire_result)) {
+                            $sum = 0;
+                            $times = 0;
                         ?>
                             <tr>
                                 <td><?php echo $admin->getName('male_candidates', $row['male_candidate_id'], "name"); ?></td>
@@ -270,16 +358,32 @@
                                     $judges_score = $admin->mysqli->query("SELECT * FROM male_formal_attire WHERE male_candidate_id = $row[male_candidate_id] ORDER BY judge_name DESC");
 
                                     while ($row2 = mysqli_fetch_assoc($judges_score)) {
+                                    $sum += average($row2['poise_and_bearing'], $row2['stage_presence'], $row2['fitness_and_style'], $row2['elegance']);
+                                    $times++;
                                 ?>
-                                <td><?php echo average($row2['poise_and_bearing'], $row2['stage_presence'], $row2['fitness_and_style'], $row2['elegance']); ?></td>
+                                <td>
+                                    <a class="text-decoration-none text-dark edit-score" href="edit-candidate-score.php?id=<?php echo $row2['id']; ?>&category=male_formal_attire&sex=male">  
+                                        <?php echo average($row2['poise_and_bearing'], $row2['stage_presence'], $row2['fitness_and_style'], $row2['elegance']); ?>
+                                </td>
 
-                                <?php } ?>
+                                <?php }
+                                $times2++;
+
+                                if ($highest_score < number_format($sum / $times, 2)) {
+                                    $highest_score = number_format($sum / $times, 2);
+                                    $male_formal_attire = $times2;
+                                }
+                                ?>
+
+                                <td>
+                                    <?php echo number_format($sum / $times, 2);?>
+                                </td>
+                                
                             </tr>
                         <?php } ?>
                     </tbody>
                 </tbody>
             </table>
-
 
         </div>
 
@@ -316,6 +420,22 @@
 
     </div>
 
+    
+<script defer>
+
+    production_number = document.getElementById("male_production_number");
+    production_number.getElementsByTagName('tr')[<?php echo $male_production_number - 1; ?>].style.border = '2px solid yellow';
+
+    casual_wear = document.getElementById("male_casual_wear");
+    casual_wear.getElementsByTagName('tr')[<?php echo $male_casual_wear - 1; ?>].style.border = '2px solid yellow';
+
+    sports_wear = document.getElementById("male_sports_wear");
+    sports_wear.getElementsByTagName('tr')[<?php echo $male_sports_wear - 1; ?>].style.border = '2px solid yellow';
+
+    formal_attire = document.getElementById("male_formal_attire");
+    formal_attire.getElementsByTagName('tr')[<?php echo $male_formal_attire - 1; ?>].style.border = '2px solid yellow';
+    
+</script>
 
 </body>
 

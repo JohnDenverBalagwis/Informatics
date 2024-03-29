@@ -1,3 +1,13 @@
+<?php 
+session_start();
+
+setcookie('category', '', time() - 3600);
+setcookie('name', '', time() - 3600);
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

@@ -4,8 +4,12 @@
 
     $admin = new database();
 
+    session_start();
+
+
     $result_table = array();
 
+    $female_qa = 0;
     
     if (isset($_POST['submit'])) {
         $winner_candidates = $admin->mysqli->query("SELECT * FROM male_candidates ORDER BY score DESC limit 5");
@@ -46,6 +50,7 @@
     .qa-nav:hover {
         background-color: rgb(0,90,215) !important;
     }
+
     </style>
 
     <title>Final Summary Female</title>
@@ -129,14 +134,20 @@
                         <th><?php echo $row['judge_name'] ;?></th>
                     <?php } ?>
 
+                        <th>Average</th>
+
                     </tr>
                 </thead>
                 <tbody>
-                    <tbody>
+                    <tbody id="female_qa">
                         <?php
                             $qa_final_result = $admin->mysqli->query("SELECT DISTINCT female_candidate_id FROM qa_female WHERE spontaneity > 0 ORDER BY judge_name DESC, female_candidate_id DESC");
 
+                            $times2 = 0;
+                            $highest_score = 0;
                             while ($row = mysqli_fetch_assoc($qa_final_result)) {
+                            $sum = 0;
+                            $times = 0;
                         ?>
                             <tr>
                                 <td><?php echo $admin->getName('female_candidates', $row['female_candidate_id'], "name"); ?></td>
@@ -145,10 +156,30 @@
                                     $judges_score = $admin->mysqli->query("SELECT * FROM qa_female WHERE female_candidate_id = $row[female_candidate_id] ORDER BY judge_name DESC");
 
                                     while ($row2 = mysqli_fetch_assoc($judges_score)) {
+                                    $sum += average($row2['spontaneity'], $row2['substance'], $row2['delivery']);
+                                    $times++;
                                 ?>
-                                <td><?php echo average($row2['spontaneity'], $row2['substance'], $row2['delivery']); ?></td>
+                                
+                                <td>
+                                    <a class="text-decoration-none text-dark edit-score" href="edit-final-candidate-score.php?id=<?php echo $row2['id']; ?>&category=qa_female&sex=female">
+                                        <?php echo average($row2['spontaneity'], $row2['substance'], $row2['delivery']); ?>
+                                    </a>
+                                </td>
 
-                                <?php } ?>
+                                <?php }
+                                
+                                $times2++;
+
+                                if ($highest_score < number_format($sum / $times, 2)) {
+                                    $highest_score = number_format($sum / $times, 2);
+                                    $female_qa = $times2;
+                                }
+                                ?>
+
+                                <td>
+                                    <?php echo number_format($sum / $times, 2);?>
+                                </td>
+
                             </tr>
                         <?php } ?>
                     </tbody>
@@ -162,6 +193,12 @@
 
     </div>
 
+    <script defer>
+
+        qa = document.getElementById("female_qa");
+        qa.getElementsByTagName('tr')[<?php echo $female_qa - 1; ?>].style.border = '2px solid yellow';
+
+    </script>
 
 </body>
 

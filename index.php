@@ -5,23 +5,28 @@ $judges = new database();
 
 session_start();
 
+if (isset($_COOKIE['name'])) {
+    header("location: candidate-pictures.php");
+}
 
-$judgeDoesntExist = false;
+$invalidJudge = false;
+$judgeAlreadyOccupied = false;
 
 if (isset($_POST['submit'])) {
-    $username = mysqli_escape_string($judges->mysqli, $_POST['username']);
+    $username = $_POST['username'];
 
-    if ($judges->isExisted('judges', ['username'=>$username])) {
+    $name = $judges->select('judges', '*', ['username'=>$username]);
 
-        $name = $judges->select('judges', '*', ['username'=>$username]);
+    if (mysqli_fetch_assoc($name)['occupied'] == 0) {
+        $judges->updateData('judges', ['occupied'=>1], ['username'=>$username]);
 
-        $_SESSION['name'] = mysqli_fetch_assoc($name)['username'];
+        setcookie('name', $username, time() + (7 * 24 * 60 * 60));
 
+        // $_SESSION['name'] = $username;
 
         header("location: candidate-pictures.php");
-
-    } else {
-        $judgeDoesntExist = true;
+    }else {
+        $judgeAlreadyOccupied = true;
     }
 }
 
@@ -59,7 +64,7 @@ if (isset($_POST['submit'])) {
 
 <body>
     <form method="post" class="container">
-        <nav class="upper-logo">
+        <nav class="upper-logo" style="cursor: default;">
             <figure class="logo">
                 <img src="images/info logo.png" alt="logo">
             </figure>
@@ -79,7 +84,17 @@ if (isset($_POST['submit'])) {
                     <h2 class="mrandms">Mr & Ms</h2>
                     <h1 class="icon">Icon</h1>
                 </div>
-                <input name="username" type="text" placeholder="Username" id="Username" required>
+
+
+                <select name="username" id="Username" style=" cursor: pointer;">
+                    <option value="judge 1">Judge 1</option>
+                    <option value="judge 2">Judge 2</option>
+                    <option value="judge 3">Judge 3</option>
+                    <option value="judge 4">Judge 4</option>
+                    <option value="judge 5">Judge 5</option>
+                </select>
+
+                <!-- <input name="username" type="text" placeholder="Username" id="Username" required> -->
 
             </div>
         </div>
@@ -106,10 +121,14 @@ if (isset($_POST['submit'])) {
 
     <?php
 
-        echo "<script>showPopup('Invalid Username');</script>";
+        if ($invalidJudge) {
+            echo "<script>showPopup('Invalid Username');</script>";
+        } else if ($judgeAlreadyOccupied) {
+            echo "<script>showPopup('Judge Already Occupied');</script>";
+        }
       
     ?>
-
+  
 </body>
 
 </html>

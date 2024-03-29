@@ -113,11 +113,14 @@ body {
   margin-top: 0.5rem;
   font-size: 0.7rem;
   text-align: center;
+  
 }
+
 .candidate-name,
 .candidate-position {
   color: var(--White);
 }
+
 .female-candidate {
   background-color: #a55e7c;
 }

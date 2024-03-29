@@ -91,6 +91,7 @@ window.onclick = function(event) {
   }
 }
 
+
 function disableSubmit(event) {
   // Prevent the default form submission behavior
   event.preventDefault();

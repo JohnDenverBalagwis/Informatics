@@ -6,7 +6,7 @@ $admin = new database();
 session_start();
 
 function containsOnlyLetters($str) {
-  $pattern = '/^[a-zA-Z]+$/';
+  $pattern = "/^[a-zA-Z \/]+$/";
   return preg_match($pattern, $str);
 }
 
@@ -45,7 +45,6 @@ if (isset($_POST['submit'])) {
       $wrong_file = true;
     }
 }
-
 
 ?>
 
@@ -120,10 +119,38 @@ if (isset($_POST['submit'])) {
 
 
         <div class="box">
-          <button id="myBtn" class="add-candidate-button">
-          <i class="fa-solid fa-user-plus fs-6"></i>
-            Add
-          </button>
+
+          <div class="d-flex justify-content-between">
+            <button id="myBtn" class="add-candidate-button">
+            <i class="fa-solid fa-user-plus fs-6"></i>
+              Add
+            </button>
+
+            <button type="button" class="btn btn-danger my-auto me-3" style="font-size: 1rem; padding: 4px 20px" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          Destroy
+        </button>
+              
+
+
+            
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Warning!</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body mx-auto" style="margin: 0; text-align: center;">
+                    Are you Sure you Want to Destroy the Data?
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary"  style="font-size: .7rem; padding: 2px 5px" data-bs-dismiss="modal">Cancel</button>
+                    <a class="btn btn-danger" style="font-size: .7rem; padding: 2px 5px" href="destroy-data.php">Yes</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
           <table class="table table-striped">
             <thead>
@@ -207,7 +234,7 @@ if (isset($_POST['submit'])) {
                 </div>
                 <div class="modal-inputs">
                     <label for="">Age:</label>
-                    <input class="form-control fifty" type="number" name="age" required>
+                    <input class="form-control fifty" type="number" name="age" min="10" required>
                 </div>
                 <div class="modal-inputs">
                     <label for="">Course:</label>

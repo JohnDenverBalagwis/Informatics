@@ -4,7 +4,7 @@ include "classes/database.php";
 $admin = new database();
 
 function containsOnlyLetters($str) {
-    $pattern = '/^[a-zA-Z]+$/';
+    $pattern ="/^[a-zA-Z \/]+$/";
     return preg_match($pattern, $str);
   }
 
@@ -205,7 +205,7 @@ if (isset($_POST['submit'])) {
                 </div>
                 <div class="modal-inputs">
                     <label for="">Age:</label>
-                    <input class="form-control" type="number" name="age" required>
+                    <input class="form-control" type="number" name="age" min="10" required>
                 </div>
                 <div class="modal-inputs">
                     <label for="">Course:</label>

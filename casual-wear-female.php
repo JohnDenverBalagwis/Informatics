@@ -5,9 +5,19 @@ $judges = new database();
 
 session_start();
 
+if (!isset($_COOKIE['name'])) {
+    header('location: index.php');
+} else if (isset($_COOKIE['category'])) {
+    $current_page = basename($_SERVER['PHP_SELF']);
+
+    if ($_COOKIE['category'] != $current_page) {
+        header("location: $_COOKIE[category]");
+    }
+}
+
 $candidates = $judges->mysqli->query("SELECT * FROM female_candidates ORDER BY candidate_number ASC");
 
-$name = $_SESSION['name'];
+$name = $_COOKIE['name'];
 
 if (isset($_POST['submit'])) {
     while ($row = mysqli_fetch_assoc($candidates)) {
@@ -21,7 +31,10 @@ if (isset($_POST['submit'])) {
         $judges->insertData('female_casual_wear', ['female_candidate_id'=>$id, 'judge_name'=>$name, 'poise_and_bearing'=>$poise_and_bearing, 'fitness'=>$fitness, 'stage_deportment'=>$stage_deportment]);
     }
 
-    header("location: casual-wear-male.php");
+    setcookie('category', 'casual-wear-male.php', time() + (7 * 24 * 60 * 60));
+
+
+    header("location: loading-page.php?path=casual-wear-male");
 }
 ?>
 
@@ -62,7 +75,7 @@ if (isset($_POST['submit'])) {
                         ?>
                             <div>
                                 <h1 class="text-center text-white"><?php echo $row['candidate_number'] ?></h1>
-                                <img style="width: 500px" src="uploads/<?php echo $row['image']; ?>"> 
+                                <img style="width: 300px" src="uploads/<?php echo $row['image']; ?>"> 
                                 <h3 class="text-center text-white"><?php echo $row['name']; ?></h3>
                             </div>
                         <?php } ?>
@@ -199,15 +212,15 @@ if (isset($_POST['submit'])) {
         });
 
 
-
     </script>
 
-    <?php 
-        if (!isset($_SESSION['casual-wear-female'])) {
-            echo "<script>showPopup('Submitted Sucessfully');</script>";
-            $_SESSION['casual-wear-female'] = true;
-        }
-    ?>
+        <?php 
+            
+            if (isset($_GET['submitted'])) {
+                echo "<script>showPopup('Submitted Sucessfully');</script>";
+            }
+        ?>
+
 </body>
 
 </html>

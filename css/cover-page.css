@@ -62,7 +62,6 @@ body::after {
 .upper-logo {
   display: flex;
   justify-content: flex-start;
-  cursor: pointer;
   position: relative;
   z-index: 3;
 }
@@ -167,14 +166,12 @@ body::after {
   background-color: var(--White);
   outline: none;
   border: none;
-  cursor: text;
   position: absolute;
   top: 68%;
   transform: translateY(50%);
   z-index: 4;
   width: 200px;
 }
-
 .get-started-btn:hover {
   background-color: var(--NavyBlue);
   color: var(--White);

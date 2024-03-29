@@ -1,21 +1,6 @@
 <?php
-include "classes/database.php";
 
 session_start();
-
-if (!isset($_COOKIE['name'])) {
-    header('location: index.php');
-}
-
-
-$judges = new database();
-
-if (isset($_POST['submit'])) {
-    setcookie('category', 'qa-female.php', time() + (7 * 24 * 60 * 60));
-
-    header("location: qa-female.php");
-    
-}
 
 
 ?>
@@ -32,6 +17,37 @@ if (isset($_POST['submit'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="image-slider.js" defer></script>
+    <style>
+        .loading-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            margin-top: 2rem;
+        }
+
+        .loading {
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid #0099ff;
+            border-radius: 50%;
+            width: 70px;
+            height: 70px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+</style>
+
+<script defer>
+
+setTimeout(function() {
+    window.location.href = "<?php echo $_GET['path'] ?>.php?submitted";
+}, 2000); 
+
+</script>
 </head>
 
 <body>
@@ -45,18 +61,11 @@ if (isset($_POST['submit'])) {
         </div>
     </nav>
 
-    <h1 class="text-white fw-bold text-center" style="margin-top: 20vh;">Question & Answer Portion</h1>
+    <h1 class="text-white fw-bold text-center" style="margin-top: 20vh;">Proceeding to <?php echo $_GET['path']; ?></h1>
 
-
-    <?php
-        if ($judges->isExisted('male_candidates', ['winner'=>'qualified']) || $judges->isExisted('female_candidates', ['winner'=>'qualified'])) {
-    ?>
-    <form action="" method="post" class="text-center">
-        <input class="btn btn-primary fs-4" name="submit" type="submit" value="Get Started">
-    </form>
-    <?php }else {
-        echo '<h3 class="text-white text-center">Stand by</h3>';
-    } ?>
+    <div class="loading-container">
+        <div class="loading"></div>
+    </div>
 
 </body>
 

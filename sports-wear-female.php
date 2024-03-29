@@ -6,7 +6,18 @@ $judges = new database();
 
 session_start();
 
-$name = $_SESSION['name'];
+if (!isset($_COOKIE['name'])) {
+    header('location: index.php');
+} else if (isset($_COOKIE['category'])) {
+    $current_page = basename($_SERVER['PHP_SELF']);
+
+    if ($_COOKIE['category'] != $current_page) {
+        header("location: $_COOKIE[category]");
+    }
+}
+
+
+$name = $_COOKIE['name'];
 
 $candidates = $judges->mysqli->query("SELECT * FROM female_candidates ORDER BY candidate_number ASC");
 
@@ -21,7 +32,9 @@ if (isset($_POST['submit'])) {
         $judges->insertData('female_sports_wear', ['female_candidate_id'=>$id,  'judge_name'=>$name, 'poise_and_bearing'=>$poise_and_bearing, 'stage_deportment'=>$stage_deportment, 'fitness'=>$fitness]);
     }
 
-    header("location: sports-wear-male.php");
+    setcookie('category', 'sports-wear-male.php', time() + (7 * 24 * 60 * 60));
+
+    header("location: loading-page.php?path=sports-wear-male");
 }
 
 ?>
@@ -63,7 +76,7 @@ if (isset($_POST['submit'])) {
                         ?>
                             <div>
                                 <h1 class="text-center text-white"><?php echo $row['candidate_number'] ?></h1>
-                                <img style="width: 500px" src="uploads/<?php echo $row['image']; ?>"> 
+                                <img style="width: 300px" src="uploads/<?php echo $row['image']; ?>"> 
                                 <h3 class="text-center text-white"><?php echo $row['name']; ?></h3>
                             </div>
                         <?php } ?>
@@ -206,9 +219,8 @@ if (isset($_POST['submit'])) {
     </script>
 
     <?php 
-        if (!isset($_SESSION['sports-wear-female'])) {
+        if (isset($_GET['submitted'])) {
             echo "<script>showPopup('Submitted Sucessfully');</script>";
-            $_SESSION['sports-wear-female'] = true;
         }
     ?>
 </body>

@@ -5,7 +5,18 @@ $judges = new database();
 
 session_start();
 
-$name = $_SESSION['name'];
+if (!isset($_COOKIE['name'])) {
+    header('location: index.php');
+} else if (isset($_COOKIE['category'])) {
+    $current_page = basename($_SERVER['PHP_SELF']);
+
+    if ($_COOKIE['category'] != $current_page) {
+        header("location: $_COOKIE[category]");
+    }
+}
+
+
+$name = $_COOKIE['name'];
 
 $candidates = $judges->mysqli->query("SELECT * FROM male_candidates ORDER BY candidate_number ASC");
 
@@ -21,18 +32,24 @@ if (isset($_POST['submit'])) {
         $judges->insertData('male_production_number', ['male_candidate_id'=>$id,  'judge_name'=>$name, 'poise_and_bearing'=>$poise_and_bearing, 'fitness'=>$fitness, 'uniqueness_and_style'=>$uniqueness_and_style]);
     }
 
-    header("location: casual-wear-female.php");
+    
+
+    setcookie('category', 'casual-wear-female.php', time() + (7 * 24 * 60 * 60));
+
+    header("location: loading-page.php?path=casual-wear-female");
 }
+
 ?>
 
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Production Number Male</title>
     <link rel="stylesheet" href="css/image-slider.css?<?php echo time(); ?>">
+    <link rel="stylesheet" href="style.css?<?php echo time(); ?>">
     <link rel="shortcut icon" href="images/infor.png" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
@@ -62,7 +79,7 @@ if (isset($_POST['submit'])) {
                         ?>
                             <div>
                                 <h1 class="text-center text-white"><?php echo $row['candidate_number'] ?></h1>
-                                <img style="width: 500px" src="uploads/<?php echo $row['image']; ?>"> 
+                                <img style="width: 300px" src="uploads/<?php echo $row['image']; ?>"> 
                                 <h3 class="text-center text-white"><?php echo $row['name']; ?></h3>
                             </div>
                         <?php } ?>
@@ -101,6 +118,7 @@ if (isset($_POST['submit'])) {
                     ?>
                     <tr data-index="<?php echo $i; ?>">
                         <td>
+
                             <h5 class="fw-bold"><?php echo $row['candidate_number']; ?></h5>
                         </td>
                         <td>
@@ -148,8 +166,25 @@ if (isset($_POST['submit'])) {
         </form>
     </div>
 
+    <div id="popup">
+      <p id="popupMessage"></p>
+    </div>
+
+
 
     <script>
+
+        function showPopup(message) {
+            var popup = document.getElementById("popup");
+            document.getElementById('popupMessage').innerHTML = message;
+            popup.style.display = "block"; // Show the popup
+
+            // Automatically close the popup after 2 seconds
+            setTimeout(function() {
+                popup.style.display = "none"; // Hide the popup
+            }, 1500);
+        }
+
 
         function limitInput (cName, limit) {
             let limitTwenty = document.querySelectorAll(`.${cName}`);
@@ -183,15 +218,15 @@ if (isset($_POST['submit'])) {
         });
 
 
-
     </script>
 
     <?php 
-        if (!isset($_SESSION['production-number-male'])) {
+        
+        if (isset($_GET['submitted'])) {
             echo "<script>showPopup('Submitted Sucessfully');</script>";
-            $_SESSION['production-number-male'] = true;
         }
     ?>
+
 </body>
 
 </html>

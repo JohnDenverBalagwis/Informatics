@@ -6,7 +6,18 @@ $judges = new database();
 
 session_start();
 
-$name = $_SESSION['name'];
+if (!isset($_COOKIE['name'])) {
+    header('location: index.php');
+} else if (isset($_COOKIE['category'])) {
+    $current_page = basename($_SERVER['PHP_SELF']);
+
+    if ($_COOKIE['category'] != $current_page) {
+        header("location: $_COOKIE[category]");
+    }
+}
+
+
+$name = $_COOKIE['name'];
 
 $candidates = $judges->mysqli->query("SELECT * FROM female_candidates ORDER BY candidate_number ASC");
 
@@ -22,7 +33,9 @@ if (isset($_POST['submit'])) {
         $judges->insertData('female_formal_attire', ['female_candidate_id'=>$id, 'judge_name'=>$name, 'poise_and_bearing'=>$poise_and_bearing, 'stage_presence'=>$stage_presence, 'fitness_and_style'=>$fitness_and_style, 'elegance'=>$elegance]);
     }
 
-    header("location: formal-attire-male.php");
+    setcookie('category', 'formal-attire-male.php', time() + (7 * 24 * 60 * 60));
+
+    header("location: loading-page.php?path=formal-attire-male");
 }
 
 ?>
@@ -57,14 +70,14 @@ if (isset($_POST['submit'])) {
     <div class="main-container">
         <div class="main-content">
             <div class="slider-container">
-            <div class="slider">
+                <div class="slider">
                     <div class="slides">
                         <?php
                             while ($row = mysqli_fetch_assoc($candidates)) {
                         ?>
                             <div>
                                 <h1 class="text-center text-white"><?php echo $row['candidate_number'] ?></h1>
-                                <img style="width: 500px" src="uploads/<?php echo $row['image']; ?>"> 
+                                <img style="width: 300px" src="uploads/<?php echo $row['image']; ?>"> 
                                 <h3 class="text-center text-white"><?php echo $row['name']; ?></h3>
                             </div>
                         <?php } ?>
@@ -215,9 +228,8 @@ if (isset($_POST['submit'])) {
     </script>
 
     <?php 
-        if (!isset($_SESSION['formal-attire-female'])) {
+        if (isset($_GET['submitted'])) {
             echo "<script>showPopup('Submitted Sucessfully');</script>";
-            $_SESSION['formal-attire-female'] = true;
         }
     ?>
 </body>
